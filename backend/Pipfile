@@ -13,6 +13,7 @@ python-dotenv = "*"
 werkzeug = "*"
 wtforms = "*"
 flask-sqlalchemy = "*"
+gunicorn = "*"
 
 [dev-packages]
 autopep8 = "*"

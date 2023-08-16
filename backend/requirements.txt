@@ -18,3 +18,4 @@ sqlalchemy
 werkzeug
 wtforms
 autopep8
+gunicorn
