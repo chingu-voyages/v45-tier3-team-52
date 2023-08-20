@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+sqlalchemy = "*"
+alembic = "*"
+flask-cors = "*"
+flask-login = "*"
+python-dotenv = "*"
+werkzeug = "*"
+wtforms = "*"
+flask-sqlalchemy = "*"
+gunicorn = "*"
+
+[dev-packages]
+autopep8 = "*"
+
+[requires]
+python_version = "3.9"
