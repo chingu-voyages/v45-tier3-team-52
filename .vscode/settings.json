@@ -19,5 +19,9 @@
 	"prettier.bracketSpacing": true,
 	"prettier.bracketSameLine": true,
 	"prettier.singleAttributePerLine": true,
-	"prettier.endOfLine": "lf"
+	"prettier.endOfLine": "lf",
+	"[python]": {
+		"editor.defaultFormatter": "ms-python.autopep8"
+	},
+	"python.formatting.provider": "none"
 }
