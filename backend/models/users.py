@@ -48,3 +48,4 @@ class User(db.Model, UserMixin):
             'userPortfolio': self.owner_name,
             'userTransactions': [transaction.to_dict() for transaction in self.owner_transactions]
         }
+
