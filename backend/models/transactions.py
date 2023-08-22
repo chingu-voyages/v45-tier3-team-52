@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA
 from sqlalchemy.sql import func
+from datetime import datetime
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
@@ -15,7 +16,12 @@ class Transaction(db.Model):
     totalPrice = db.Column(db.Float, nullable=False)
     created_date = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
-    
+    updatedAt = db.Column(
+        db.DateTime,
+        default=datetime.utcnow,
+        onupdate=datetime.utcnow,
+        nullable=False
+    )
     # ! Relationships
     transactions_owner = db.relationship('users', back_populates="owner_transactions")
     # stocks_owner = db.relationship('stocks', back_populates="owner_stocks")
