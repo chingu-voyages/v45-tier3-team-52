@@ -14,13 +14,12 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(40), nullable=False)
     last_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
+    wallet = db.Column(db.Float(100))
     hashed_password = db.Column(db.String(255), nullable=False)
     created_date = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
-
-    # TODO: pending assessment for config
-    # updated_date = db.Column(db.DateTime(
-    #     timezone=True), server_default=func.now())
+    updated_date = db.Column(db.DateTime(timezone=True),
+                             server_default=func.now(), onupdate=func.now())
 
     # ! Relationships
     owner_name = db.relationship(
@@ -48,4 +47,3 @@ class User(db.Model, UserMixin):
             'userPortfolio': self.owner_name,
             'userTransactions': [transaction.to_dict() for transaction in self.owner_transactions]
         }
-
