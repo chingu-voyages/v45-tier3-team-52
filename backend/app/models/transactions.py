@@ -9,14 +9,14 @@ class Transaction(db.Model):
         __table_args__ = {'schema' : SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    userid = db.Column(db.Integer, db.ForeignKey(db.add_prefix_for_prod('user.id')), nullable=False)
-    stockid = db.Column(db.Integer, db.ForeignKey(db.add_prefix_for_prod('stock.id')), nullable=False)
+    # userid = db.Column(db.Integer, db.ForeignKey(db.add_prefix_for_prod('user.id')), nullable=False)
+    # stockid = db.Column(db.Integer, db.ForeignKey(db.add_prefix_for_prod('stock.id')), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(255), nullable=False) #pending, processed, etc
     totalPrice = db.Column(db.Float, nullable=False)
-    created_date = db.Column(db.DateTime(
+    created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
-    updatedAt = db.Column(
+    updated_at = db.Column(
         db.DateTime,
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
@@ -24,8 +24,9 @@ class Transaction(db.Model):
     )
     # ! Relationships
     transactions_owner = db.relationship('users', back_populates="owner_transactions")
-    # stocks_owner = db.relationship('stocks', back_populates="owner_stocks")
-    
+    transactions_stock = db.relationship('stocks', back_populates="stock_transactions")
+
+    # ? Methods
     def to_dict(self):
         return {
             'id': self.id,
