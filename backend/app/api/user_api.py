@@ -1,4 +1,4 @@
-from flask import request, Blueprint
+from flask import request, Blueprint, jsonify
 from flask_login import login_required, current_user
 from app.models import User, db
 
@@ -12,6 +12,7 @@ auth_error = "User not authorized to complete this action"
 def user(id):
     user = User.query.get_or_404(id)
     return user.to_dict()
+    # return {"message": "This works"}
 
 ###### * Delete User #################################
 

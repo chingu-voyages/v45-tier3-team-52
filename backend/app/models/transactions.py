@@ -1,6 +1,7 @@
 from .db import db, environment, SCHEMA
 from sqlalchemy.sql import func
 from datetime import datetime
+from .stock_transactions import StockTransactions
 
 class Transaction(db.Model):
     __tablename__ = 'transactions'
@@ -9,11 +10,10 @@ class Transaction(db.Model):
         __table_args__ = {'schema' : SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    # userid = db.Column(db.Integer, db.ForeignKey(db.add_prefix_for_prod('user.id')), nullable=False)
-    # stockid = db.Column(db.Integer, db.ForeignKey(db.add_prefix_for_prod('stock.id')), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     status = db.Column(db.String(255), nullable=False) #pending, processed, etc
-    totalPrice = db.Column(db.Float, nullable=False)
+    total_price = db.Column(db.Float, nullable=False)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -23,8 +23,7 @@ class Transaction(db.Model):
         nullable=False
     )
     # ! Relationships
-    transactions_owner = db.relationship('users', back_populates="owner_transactions")
-    transactions_stock = db.relationship('stocks', back_populates="stock_transactions")
+    transactions_stock = db.relationship('Stock', secondary=StockTransactions, back_populates="stock_transactions")
 
     # ? Methods
     def to_dict(self):
@@ -35,10 +34,5 @@ class Transaction(db.Model):
             'quantity': self.quantity,
             'totalPrice': self.totalPrice,
             'status': self.status,
-            'transaction_owner': {
-                'id': self.transactions_owner.id,
-                'first_name': self.transactions_owner.first_name,
-                'last_name':  self.transactions_owner.last_name,
-                'userPortfolio': self.transactions_owner.owner_name,
-              }
+            'stocks' : [stock.to_dict() for stock in self.transactions_stock]
         }

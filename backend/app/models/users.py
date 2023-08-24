@@ -27,12 +27,10 @@ class User(db.Model, UserMixin):
     )
 
     # ! Relationships
-    owner_name = db.relationship(
-        'user_portfolios', back_populates='name_owner', cascade='all, delete')
     owner_transactions = db.relationship(
-        'transactions', back_populates='transactions_owner', cascade='all, delete')
+        'Transaction', backref='owner', lazy=True,  cascade='all, delete')
     owner_portfolio = db.relationship(
-        'user_portfolios', back_populates='portfolio_owner', cascade='all, delete')
+        'UserPortfolio', back_populates='portfolio_owner', cascade='all, delete')
 
     # ? Methods
     @property
@@ -51,6 +49,6 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'first_name': self.first_name,
             'last_name':  self.last_name,
-            'userPortfolio': self.owner_name,
+            'userPortfolio': self.owner_portfolio,
             'userTransactions': [transaction.to_dict() for transaction in self.owner_transactions]
         }

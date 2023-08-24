@@ -2,6 +2,7 @@ from .db import db, environment, SCHEMA
 from datetime import datetime
 from sqlalchemy.sql import func
 from .portfolio_stock import PortfolioStocks
+from .stock_transactions import StockTransactions
 
 
 class Stock(db.Model):
@@ -24,9 +25,9 @@ class Stock(db.Model):
 
     # ! Relationships
     stock_portfolio = db.relationship(
-        'user_portfolios', secondary=PortfolioStocks, back_populates='portfolio_stock')
+        'UserPortfolio', secondary=PortfolioStocks, back_populates='portfolio_stock')
     stock_transactions = db.relationship(
-        'transactions', back_populates='transactions_stock')
+        'Transaction', secondary=StockTransactions, back_populates='transactions_stock')
 
     # ? Methods
     def to_dict(self):
@@ -38,5 +39,5 @@ class Stock(db.Model):
             'currentPrice': self.currentPrice,
             'createdAt': self.createdAt,
             'updatedAt': self.updatedAt,
-            'portfolio': self.stock_portfolio.to_dict()
+            'portfolio': [portfolio.to_dict() for portfolio in self.stock_portfolio]
         }

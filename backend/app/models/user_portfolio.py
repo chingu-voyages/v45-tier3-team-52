@@ -16,8 +16,7 @@ class UserPortfolio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)  # what does name mean?
     balance = db.Column(db.Float(15))
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-    # stock_id = db.Column(db.Integer, db.ForeignKey('stock.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     quantity_per_stock = db.Column(db.Integer)
     stock_num = db.Column(db.Integer)
     created_at = db.Column(db.DateTime(
@@ -33,9 +32,9 @@ class UserPortfolio(db.Model):
 
     # ! Relationships
     portfolio_owner = db.relationship(
-        'users', back_populates='owner_portfolio')
+        'User', back_populates='owner_portfolio')
     portfolio_stock = db.relationship(
-        'stocks', secondary=PortfolioStocks, back_populates='stock_portfolio')
+        'Stock', secondary=PortfolioStocks, back_populates='stock_portfolio')
 
     # ? Methods
 
