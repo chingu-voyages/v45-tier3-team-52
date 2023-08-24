@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA
 from datetime import datetime
 from sqlalchemy.sql import func
-from .portfolio_stock import portfolio_stocks
+from .portfolio_stock import PortfolioStocks
 
 
 class Stock(db.Model):
@@ -24,7 +24,7 @@ class Stock(db.Model):
 
     # ! Relationships
     stock_portfolio = db.relationship(
-        'user_portfolios', secondary=portfolio_stocks, back_populates='portfolio_stock')
+        'user_portfolios', secondary=PortfolioStocks, back_populates='portfolio_stock')
     stock_transactions = db.relationship(
         'transactions', back_populates='transactions_stock')
 

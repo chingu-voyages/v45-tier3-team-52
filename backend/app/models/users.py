@@ -15,7 +15,7 @@ class User(db.Model, UserMixin):
     first_name = db.Column(db.String(40), nullable=False)
     last_name = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
-    wallet = db.Column(db.Float(100))
+    wallet = db.Column(db.Float(100), default=1000.0)
     hashed_password = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
