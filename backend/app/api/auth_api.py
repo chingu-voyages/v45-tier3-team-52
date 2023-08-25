@@ -13,7 +13,8 @@ def login():
         # if bcrypt.check_password_hash(user.password, form.password.data)
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
-        return user.to_dict()
+        # return user.to_dict()
+        return {"message": "login works"}
 
 
 @auth_routes.route("/register", methods=['POST'])
@@ -32,14 +33,16 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        return new_user.to_dict()
+        # return new_user.to_dict()
+        return {"message": "register works"}
     else:
         print("not validate")
     
 @auth_routes.route("/logout")
 def logout():
     logout_user()
-    redirect(url_for("login"))
+    # redirect(url_for("login"))
+    return {"message": "logout works"}
     
 
 
