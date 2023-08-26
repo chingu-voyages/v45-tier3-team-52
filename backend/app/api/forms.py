@@ -36,3 +36,25 @@ class LoginForm(FlaskForm):
             raise ValidationError('Email provided might not exist')
         if not user.check_password(password):
             raise ValidationError('Credentials provided do not match')
+
+
+class UserForm(FlaskForm):
+    """
+    Form for editing profile information.
+    """
+    first_name = StringField(validators=[DataRequired(), Length(
+        min=4, max=40)])
+
+    last_name = StringField(validators=[DataRequired(), Length(
+        min=4, max=40)])
+
+    email = StringField(validators=[DataRequired(), Length(
+        min=4, max=40)])
+
+    password = StringField(validators=[DataRequired(), Length(
+        min=9, max=40)])
+
+    def validate_email(self, email):
+        existing_user_email = User.query.filter_by(email=email.data).first()
+        if existing_user_email:
+            raise ValidationError("Email Address already in use.")
