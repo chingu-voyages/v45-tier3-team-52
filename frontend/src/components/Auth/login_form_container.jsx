@@ -1,12 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
-import { login, clearErrors } from "../../actions/session_actions";
-import { showModal, hideModal } from "../../actions/modal_actions";
-import SessionForm from "./session_form";
-import { withRouter } from "react-router-dom";
+import { login, clearErrors } from "../../actions/auth_actions";
+import AuthForm from "./auth_form";
+import { useNavigate } from "react-router-dom";
 
-const mSTP = props => {
-	const { errors } = props;
+const LoginFormContainer = props => {
+	const navigate = useNavigate();
+
+	const {
+		errors,
+		processForm,
+		// hideModal,
+		clearErrors,
+		// otherForm,
+		formType,
+	} = props;
+
+	// Your component logic here, if needed
+
+	return (
+		<AuthForm
+			// errors={errors}
+			// processForm={processForm}
+			clearErrors={clearErrors}
+			navigate={navigate}
+			formType={formType}
+		/>
+	);
+};
+
+const mapStateToProps = state => {
+	const { errors } = state;
 
 	return {
 		errors: errors.session,
@@ -14,20 +38,11 @@ const mSTP = props => {
 	};
 };
 
-const mDTP = dispatch => {
+const mapDispatchToProps = dispatch => {
 	return {
 		processForm: user => dispatch(login(user)),
-		// other form is another site
-		// otherForm: (
-		// 	<span
-		// 		className="other-form"
-		// 		onClick={() => dispatch(showModal("Register"))}>
-		// 		register
-		// 	</span>
-		// ),
-		hideModal: () => dispatch(hideModal()),
-		clearErrors: () => dispatch(clearErrors()),
+		// clearErrors: () => dispatch(clearErrors()),
 	};
 };
 
-export default withRouter(connect(mSTP, mDTP)(SessionForm));
+export default connect(mapStateToProps, mapDispatchToProps)(LoginFormContainer);

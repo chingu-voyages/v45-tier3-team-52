@@ -2,12 +2,18 @@
 
 import React from "react";
 import { connect } from "react-redux";
-import { signup, clearErrors } from "../../actions/session_actions";
-import SessionForm from "./session_form";
-import { showModal, hideModal } from "../../actions/modal_actions";
-import { withRouter } from "react-router-dom";
+import { signup, clearErrors } from "../../actions/auth_actions";
+// import { showModal, hideModal } from "../../actions/modal_actions";
+import AuthForm from "./auth_form";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-const mSTP = props => {
+const RegisterFormContainer = props => {
+	const navigate = useNavigate();
+	const { formType } = props;
+	return <AuthForm formType={formType} />;
+};
+
+const mapStateToProps = state => {
 	const { errors } = props;
 	return {
 		errors: errors.session,
@@ -15,17 +21,9 @@ const mSTP = props => {
 	};
 };
 
-const mDTP = dispatch => ({
+const mapDispatchToProps = dispatch => ({
 	processForm: user => dispatch(signup(user)),
-	// otherForm: (
-	// 	<span
-	// 		className="other-form"
-	// 		onClick={() => dispatch(showModal("Sign in"))}>
-	// 		sign in
-	// 	</span>
-	// ),
-	// hideModal: () => dispatch(hideModal()),
-	clearErrors: () => dispatch(clearErrors()),
+	// clearErrors: () => dispatch(clearErrors()),
 });
 
-export default withRouter(connect(mSTP, mDTP)(SessionForm));
+export default connect(mapStateToProps, mapDispatchToProps)(LoginFormContainer);
