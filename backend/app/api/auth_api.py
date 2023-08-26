@@ -11,7 +11,6 @@ def login():
     form = LoginForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        # if bcrypt.check_password_hash(user.password, form.password.data)
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()

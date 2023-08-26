@@ -16,11 +16,6 @@ class RegisterForm(FlaskForm):
     last_name = StringField('LastName', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), validate_email])
     password = PasswordField('Password', validators=[DataRequired()])
-    # submit = SubmitField("Register")
-    # def validate_email(self, email):
-    #     existing_user_email = User.query.filter_by(email=email.data).first()
-    #     if existing_user_email:
-    #         raise ValidationError("Email address already in use.")
 
 
 class LoginForm(FlaskForm):
@@ -41,5 +36,3 @@ class LoginForm(FlaskForm):
             raise ValidationError('Email provided might not exist')
         if not user.check_password(password):
             raise ValidationError('Credentials provided do not match')
-
-    # submit = SubmitField("Log In")
