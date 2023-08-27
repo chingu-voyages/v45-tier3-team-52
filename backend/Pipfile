@@ -17,6 +17,10 @@ gunicorn = "*"
 flask-migrate = "*"
 python-dateutil = "*"
 autopep8 = "*"
+flask-wtf = "*"
+polygon-api-client = "*"
+urllib3 = "*"
+polygon = "*"
 
 [dev-packages]
 autopep8 = "*"

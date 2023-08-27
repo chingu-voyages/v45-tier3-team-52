@@ -10,9 +10,8 @@ class Stock(db.Model):
     if environment == "production":
         __table_args__ = {'schema': SCHEMA}
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(255), nullable=False)
+    org_name = db.Column(db.String(255), nullable=False)
     symbol = db.Column(db.String(255), nullable=False, unique=True)
-    abv = db.Column(db.String(255))
     currentPrice = db.Column(db.Integer)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
@@ -20,7 +19,7 @@ class Stock(db.Model):
         db.DateTime,
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
-        nullable=False
+        # nullable=False
     )
 
     # ! Relationships
