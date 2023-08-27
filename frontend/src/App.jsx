@@ -1,14 +1,29 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import SplashContainer from "./components/Splash/splash_container";
-// import { Switch, Route } from "react-router-dom";
-// import "./App.css";
+import LoginFormContainer from "./components/Auth/login_form_container";
+import RegisterFormContainer from "./components/Auth/register_form_container";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
 	return (
-		<>
-			<SplashContainer />
-		</>
+		<div className="h-screen">
+			<Routes>
+				<Route
+					exact
+					path="/login"
+					Component={LoginFormContainer}
+				/>
+				<Route
+					exact
+					path="/register"
+					Component={RegisterFormContainer}
+				/>
+				<Route
+					exact
+					path="/"
+					Component={SplashContainer}
+				/>
+			</Routes>
+		</div>
 	);
 }
 
