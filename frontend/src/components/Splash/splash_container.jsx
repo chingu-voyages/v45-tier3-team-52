@@ -3,17 +3,6 @@ import { connect } from "react-redux";
 import Splash from "./splash";
 import { useNavigate } from "react-router-dom";
 
-const SplashContainer = ({ currentUser }) => {
-	const navigate = useNavigate();
-
-	return (
-		<Splash
-			currentUser={currentUser}
-			navigate={navigate}
-		/>
-	);
-};
-
 const mapStateToProps = state => {
 	const {
 		session,
@@ -25,4 +14,8 @@ const mapStateToProps = state => {
 	};
 };
 
-export default connect(mapStateToProps)(SplashContainer);
+const mapDispatchToProps = state => {
+	return {};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Splash);
