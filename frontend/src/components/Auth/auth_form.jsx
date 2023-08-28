@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+// import robinhood from "../../assets/robinhoodBG.jpeg";
 
 const textInputStyle = "text-xs";
 const inputStyle =
@@ -55,7 +56,7 @@ const AuthForm = props => {
 
 	const desktopDisplay =
 		formType === "Register" ? (
-			<div className="sm:hidden lg:block lg:w-1/2 lg:flex lg:items-center lg:justify-center lg:px-16 lg:bg-[#82c8d2]">
+			<div className="hidden lg:flex h-full w-1/2 items-center justify-center px-16 bg-[#82c8d2]">
 				<div className="flex flex-col h-5/6 gap-24">
 					<div className="text-2xl text-gray-700">Robinhood</div>
 					<div className="flex flex-col gap-12">
@@ -68,7 +69,7 @@ const AuthForm = props => {
 				</div>
 			</div>
 		) : (
-			<div className="sm:hidden lg:block lg:w-1/2 lg:bg-[#82c8d2] bg-[url('../../../public/robinhoodBG.jpeg')] bg-cover"></div>
+			<div className="sm:hidden lg:block lg:w-1/2 lg:bg-[#82c8d2] bg-[url('/robinhoodBG.jpeg')] bg-cover"></div>
 		);
 
 	const authFormDisplay = (
@@ -76,7 +77,7 @@ const AuthForm = props => {
 			<div className="flex flex-col gap-5 mx-10 w-full md:mx-20 lg:mx-10">
 				<div className="text-xl">
 					{formType === "Register"
-						? "Enter your first name and last name as they appear on your government ID"
+						? "Register for a Robhinhood account"
 						: "Log in"}
 				</div>
 				<form className="flex flex-col gap-5">
