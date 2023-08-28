@@ -9,6 +9,8 @@ from .api.user_api import user_routes
 from .seeds import seed_commands
 from .config import Config
 from .api.stock_api import stock_route
+from .api.auth_api import auth_routes
+from .api.user_api import user_routes
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 
@@ -30,6 +32,8 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(stock_route, url_prefix='/api/stocks')
+app.register_blueprint(auth_routes, url_prefix='/api/auth')
+
 db.init_app(app)
 Migrate(app, db)
 
