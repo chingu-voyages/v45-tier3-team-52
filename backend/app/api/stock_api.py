@@ -15,6 +15,11 @@ def list_of_stock():
     dict = json.loads(data)
     return jsonify(dict["results"])
 
+
+@stock_route.route('/<int:id>')
+def stock(id):
+    stock = Stock.query.get_or_404(id)
+    return stock.to_dict()
 # print(stock_list)
 
 # stock_routes = Blueprint("stocks", __name__)
