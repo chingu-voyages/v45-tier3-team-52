@@ -32,11 +32,10 @@ class Stock(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'name': self.name,
+            'org_name': self.org_name,
             'symbol': self.symbol,
-            'abv': self.abv,
             'currentPrice': self.currentPrice,
-            'createdAt': self.createdAt,
-            'updatedAt': self.updatedAt,
+            'createdAt': self.created_at,
+            'updatedAt': self.updated_at,
             'portfolio': [portfolio.to_dict() for portfolio in self.stock_portfolio]
         }

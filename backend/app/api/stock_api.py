@@ -1,22 +1,19 @@
 from flask import Blueprint, jsonify, request, redirect
 from app.models import Stock, db
+import os
+import urllib.request
+import json
 
 stock_route = Blueprint("stocks",  __name__)
-# client = RESTClient(os.getenv('API_KEY'))
-
-# stock_list = cast(
-#     HTTPResponse,
-#     client.get_tickers(
-#         market='stocks',
-#         limit=50,
-#         all_pages=True
-#     )
-# )
 
 
-@stock_route.route('/stocks')
+@stock_route.route('/allstocks')
 def list_of_stock():
-    return jsonify("Hello World")
+    url = "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-08-25?adjusted=true&apiKey=3mbpuGf_xLfapcw7OPTqTf8_tFpGVDZk"
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    dict = json.loads(data)
+    return jsonify(dict["results"])
 
 # print(stock_list)
 
