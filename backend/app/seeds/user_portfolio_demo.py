@@ -4,8 +4,14 @@ from sqlalchemy import text
 
 def seed_portfolio():
     portfolios = [{"name": "Saving_portfolio",
-                   "balance": 1000.0, "user_id": 1}, {"name": "my_saving",
-                                                      "balance": 1000.0, "user_id": 2}]
+                   "user_id": 1}, {"name": "my_saving",
+                                   "user_id": 2}, {"name": "my_savings",
+                                                   "user_id": 3}, {"name": "my_stocks",
+                                                                   "user_id": 4}, {"name": "Money",
+                                                                                   "user_id": 5}, {"name": "longTerm",
+                                                                                                   "user_id": 6}, {"name": "Savings",
+                                                                                                                   "user_id": 7}, {"name": "wallet",
+                                                                                                                                   "user_id": 8}]
 
     db.session.add_all([UserPortfolio(**portfolio)for portfolio in portfolios])
     db.session.commit()

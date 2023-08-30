@@ -20,27 +20,21 @@ def portfolio(id):
 #### * Delete Portfolio ###############
 
 
-@portfolio_routes.route()
+@portfolio_routes.route('/<int:id>', methods=['DELETE'])
 # @login_required
 def portfolio_delete(id):
     queried_portfolio = UserPortfolio.query.get_or_404(id)
     # if queried_portfolio.to_dict()['ownerId'] != current_user.id:
     #     return jsonify({"error": auth_error}), 403
     # else:
-    # db.session.delete(queried_portfolio)
-    # db.session.commit()
+    db.session.delete(queried_portfolio)
+    db.session.commit()
     return {'message': 'Successfully deleted'}
-
-
-@portfolio_routes.route()
-# @login_required
-def portfolio_create():
-    pass
 
 
 #### * update Portfolio ##############
 
-@portfolio_routes.route()
+@portfolio_routes.route('/<int:id>', methods=['PUT'])
 # @login_required
 def portfolio_update(id):
     queried_portfolio = UserPortfolio.query.get_or_404(id)
@@ -52,8 +46,8 @@ def portfolio_update(id):
     # if queried_portfolio.to_dict()['ownerId'] != current_user.id:
     #     return jsonify({"error": auth_error}), 403
     # else:
-    # for key, val in req_data.items():
-    #     if key != None:
-    #         setattr(queried_portfolio, key, val)
-    #     db.session.commit()
-    return queried_portfolio
+    for key, val in req_data.items():
+        if key != None:
+            setattr(queried_portfolio, key, val)
+        db.session.commit()
+    return queried_portfolio.to_dict()

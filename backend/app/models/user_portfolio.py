@@ -15,7 +15,6 @@ class UserPortfolio(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)  # what does name mean?
-    balance = db.Column(db.Float(15))
     user_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod('users.id')), nullable=False)
     created_at = db.Column(db.DateTime(
@@ -40,6 +39,5 @@ class UserPortfolio(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'balance': self.balance,
             'ownerId': self.user_id
         }
