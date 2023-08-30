@@ -18,12 +18,13 @@ flask-migrate = "*"
 python-dateutil = "*"
 autopep8 = "*"
 flask-wtf = "*"
-polygon-api-client = "*"
-urllib3 = "*"
-polygon = "*"
+yfinance = "*"
 
 [dev-packages]
 autopep8 = "*"
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

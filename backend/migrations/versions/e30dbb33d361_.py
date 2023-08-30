@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<< HEAD:backend/migrations/versions/f9fe25afb844_.py
-Revision ID: f9fe25afb844
+Revision ID: e30dbb33d361
 Revises: 
-Create Date: 2023-08-25 16:58:07.727909
-=======
-Revision ID: 41f0ac30f482
-Revises: 
-Create Date: 2023-08-24 21:25:32.224538
->>>>>>> 6ee8e31a2bfe9bdab02cfbb1332e90ab4ff29ea7:backend/migrations/versions/41f0ac30f482_.py
+Create Date: 2023-08-30 19:39:09.428472
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD:backend/migrations/versions/f9fe25afb844_.py
-revision = 'f9fe25afb844'
-=======
-revision = '41f0ac30f482'
->>>>>>> 6ee8e31a2bfe9bdab02cfbb1332e90ab4ff29ea7:backend/migrations/versions/41f0ac30f482_.py
+revision = 'e30dbb33d361'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -32,7 +22,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('org_name', sa.String(length=255), nullable=False),
     sa.Column('symbol', sa.String(length=255), nullable=False),
-    sa.Column('currentPrice', sa.Integer(), nullable=True),
+    sa.Column('current_price', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),

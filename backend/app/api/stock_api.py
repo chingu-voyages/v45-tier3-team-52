@@ -3,35 +3,82 @@ from app.models import Stock, db
 import os
 import urllib.request
 import json
+import yfinance as yf
 
 stock_route = Blueprint("stocks",  __name__)
+
+polygon_API = "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-08-25?adjusted=true&apiKey={}".format(
+    os.getenv('API_KEY'))
+
+
+def api_data(url):
+    response = urllib.request.urlopen(url)
+    data = response.read()
+    dict = json.loads(data)
+    return dict['results']
+
+
+def ticker_list(stocks):
+    newlist = []
+    count = 0
+    while count <= 60:
+        newlist.append(
+            {"ticker_name": stocks[count]["T"], "close_price": stocks[count]['c']})
+        count += 1
+    return newlist
+
+
+def convert_symbol_to_company(ticker_list):
+    stock_list = []
+    for ticker in ticker_list:
+        current_ticker = yf.Ticker(ticker['ticker_name'])
+        stock_list.append({
+            'symbol': ticker['ticker_name'],
+            "org_name": current_ticker.info['longName'],
+            "current_price": ticker['close_price']
+        })
+    return stock_list
 
 
 @stock_route.route('/allstocks')
 def list_of_stock():
-    url = "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-08-25?adjusted=true&apiKey=3mbpuGf_xLfapcw7OPTqTf8_tFpGVDZk"
-    response = urllib.request.urlopen(url)
-    data = response.read()
-    dict = json.loads(data)
-    return jsonify(dict["results"])
+    return api_data(polygon_API)
 
 
 @stock_route.route('/<int:id>')
 def stock(id):
     stock = Stock.query.get_or_404(id)
     return stock.to_dict()
-# print(stock_list)
-
-# stock_routes = Blueprint("stocks", __name__)
 
 
-# @stock_routes.route('/stocks', method=['Get'])
-# def get_stocks():
-#     url = "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-01-09?adjusted=true&apiKey={}".format(
-#         os.environ.get("API_KEY"))
+@stock_route.route('/addstock', methods=["POST"])
+def add_stocks():
+    db_stocks = []
+    aggs = convert_symbol_to_company(ticker_list(api_data(polygon_API)))
+    for stock_currated in aggs:
+        all_stocks = db.session.query(Stock.id).filter_by(
+            symbol=stock_currated['symbol']).first() is not None
+        if all_stocks == True:
+            print("Already in DB")
+        elif all_stocks == False:
+            new_stock = Stock(
+                org_name=stock_currated['org_name'],
+                symbol=stock_currated['symbol'],
+                current_price=stock_currated['current_price']
+            )
+            db_stocks.append(new_stock)
+            db.session.add(new_stock)
+            db.session.commit()
+        else:
+            print("Stock Symbol Not Found in API!!!!!!!!")
+    return [stock_db.to_dict() for stock_db in db_stocks], {'message': "Sucess 200"}
 
-#     response = urllib.request.urlopen(url)
-#     data = response.read()
-#     # dict = json.loads(data)
-#     return jsonify(data)
-#     # return render_template("", stocks=dict["results"])
+
+# @stock_route.route('/addstock', methods=["GET"])
+# def add_price_seed_data():
+#     aggs = convert_symbol_to_company(ticker_list(api_data(polygon_API)))
+#     all_stocks = db.session.query(Stock).filter_by(current_price=None).all()
+#     print('all stock: ', all_stocks)
+#     for stock in all_stocks:
+#         setattr(stock, stock['current_price'], )
+#     return {'message': "Sucess 200"}
