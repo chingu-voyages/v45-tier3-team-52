@@ -2,6 +2,7 @@ from flask.cli import AppGroup
 from .users_demo import seed_users, undo_users
 from .user_portfolio_demo import seed_portfolio, undo_portfolio
 from .transactions_demo import seed_transaction, undo_transaction
+from .stocks_demo import seed_stocks, undo_stocks
 from app.models.db import db, environment, SCHEMA
 
 # Creates a seed group to hold our commands
@@ -23,10 +24,12 @@ def seed():
         db.session.commit()
     else:
         undo_users()
+        undo_stocks()
         undo_portfolio()
         undo_transaction()
 
     seed_users()
+    seed_stocks()
     seed_portfolio()
     seed_transaction()
 
@@ -35,5 +38,6 @@ def seed():
 @seed_commands.command('undo')
 def undo():
     undo_users()
+    undo_stocks()
     undo_portfolio()
     undo_transaction()
