@@ -1,10 +1,11 @@
-from flask import Blueprint, redirect, url_for, request, jsonify
-from flask_login import current_user, login_user, logout_user, login_required
+from flask import Blueprint, redirect, url_for, request
+from flask_login import login_user, logout_user
 from app.models import User, db
 from .forms import LoginForm, RegisterForm
 
 
 auth_routes = Blueprint("auth", __name__)
+
 
 @auth_routes.route("/login", methods=['POST'])
 def login():
@@ -34,8 +35,8 @@ def register():
         return new_user.to_dict()
     return {'error': 'registration failed'}, 401
 
+
 @auth_routes.route("/logout")
 def logout():
     logout_user()
     return {"message": "logout works"}
-

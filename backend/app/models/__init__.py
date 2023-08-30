@@ -4,3 +4,4 @@ from .stocks import Stock
 from .transactions import Transaction
 from .portfolio_stock import PortfolioStocks
 from .user_portfolio import UserPortfolio
+from .stock_transactions import StockTransactions

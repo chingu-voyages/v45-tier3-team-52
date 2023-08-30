@@ -1,4 +1,4 @@
-from .db import db, environment, SCHEMA
+from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 from datetime import datetime
 from .portfolio_stock import PortfolioStocks
@@ -15,10 +15,8 @@ class UserPortfolio(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), nullable=False)  # what does name mean?
-    balance = db.Column(db.Float(15))
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    quantity_per_stock = db.Column(db.Integer)
-    stock_num = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey(
+        add_prefix_for_prod('users.id')), nullable=False)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -28,9 +26,8 @@ class UserPortfolio(db.Model):
         nullable=False
     )
 
-    # stockId may need to be a relationship instead because it is many to many
-
     # ! Relationships
+
     portfolio_owner = db.relationship(
         'User', back_populates='owner_portfolio')
     portfolio_stock = db.relationship(
@@ -42,7 +39,5 @@ class UserPortfolio(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'balance': self.balance,
-            'quantityPerStock': self.quantity_per_stock,
-            'stockTotal': self.stock_num,
+            'ownerId': self.user_id
         }

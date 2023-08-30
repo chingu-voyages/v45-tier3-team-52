@@ -1,14 +1,8 @@
 """empty message
 
-<<<<<<< HEAD:backend/migrations/versions/f9fe25afb844_.py
-Revision ID: f9fe25afb844
+Revision ID: b5c4665cd6eb
 Revises: 
-Create Date: 2023-08-25 16:58:07.727909
-=======
-Revision ID: 41f0ac30f482
-Revises: 
-Create Date: 2023-08-24 21:25:32.224538
->>>>>>> 6ee8e31a2bfe9bdab02cfbb1332e90ab4ff29ea7:backend/migrations/versions/41f0ac30f482_.py
+Create Date: 2023-08-29 22:31:05.983181
 
 """
 from alembic import op
@@ -16,11 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-<<<<<<< HEAD:backend/migrations/versions/f9fe25afb844_.py
-revision = 'f9fe25afb844'
-=======
-revision = '41f0ac30f482'
->>>>>>> 6ee8e31a2bfe9bdab02cfbb1332e90ab4ff29ea7:backend/migrations/versions/41f0ac30f482_.py
+revision = 'b5c4665cd6eb'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -53,9 +43,7 @@ def upgrade():
     op.create_table('transactions',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('status', sa.String(length=255), nullable=False),
-    sa.Column('total_price', sa.Float(), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
@@ -64,10 +52,7 @@ def upgrade():
     op.create_table('user_portfolios',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=64), nullable=False),
-    sa.Column('balance', sa.Float(precision=15), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
-    sa.Column('quantity_per_stock', sa.Integer(), nullable=True),
-    sa.Column('stock_num', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=False),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
