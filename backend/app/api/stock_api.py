@@ -70,15 +70,5 @@ def add_stocks():
             db.session.add(new_stock)
             db.session.commit()
         else:
-            print("Stock Symbol Not Found in API!!!!!!!!")
+            print("Stock Symbol Not Found")
     return [stock_db.to_dict() for stock_db in db_stocks], {'message': "Sucess 200"}
-
-
-# @stock_route.route('/addstock', methods=["GET"])
-# def add_price_seed_data():
-#     aggs = convert_symbol_to_company(ticker_list(api_data(polygon_API)))
-#     all_stocks = db.session.query(Stock).filter_by(current_price=None).all()
-#     print('all stock: ', all_stocks)
-#     for stock in all_stocks:
-#         setattr(stock, stock['current_price'], )
-#     return {'message': "Sucess 200"}
