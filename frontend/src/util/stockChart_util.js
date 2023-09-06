@@ -222,14 +222,20 @@ export const stockChartOptions = {
 		{
 			// TODO: change to empty []
 			data: stockData,
-			type: "ohlc",
+			type: "line",
 			name: "AAPL Stock Price",
 			id: "aapl",
+			lineWidth: 2,
 		},
 	],
 	xAxis: [
 		{
 			visible: false,
+			// tickLength: 5,
+			// lineWidth: 0,
+			// labels: {
+			// 	enabled: false,
+			// },
 		},
 	],
 	yAxis: [
@@ -247,11 +253,56 @@ export const stockChartOptions = {
 		// ------ set buttons to bottom of chart and enable -----
 		verticalAlign: "bottom",
 		allButtonsEnabled: true,
+
+		buttonSpacing: 30,
+
+		buttonTheme: {
+			style: {
+				fontWeight: "bold",
+				fontSize: "1rem",
+			},
+
+			states: {
+				hover: {
+					fill: "transparent",
+					style: {
+						color: "#00C805",
+					},
+				},
+				select: {
+					fill: "transparent",
+					style: {
+						color: "#00C805",
+					},
+				},
+			},
+		},
+
 		buttons: [
+			{
+				type: "day",
+				count: 1,
+				text: "1D",
+				events: {
+					click: function () {
+						console.log("1 day");
+					},
+				},
+			},
+			{
+				type: "week",
+				count: 1,
+				text: "1W",
+				events: {
+					click: function () {
+						console.log("1 week");
+					},
+				},
+			},
 			{
 				type: "month",
 				count: 1,
-				text: "1m",
+				text: "1M",
 				events: {
 					click: function () {
 						console.log("1 month");
@@ -261,23 +312,23 @@ export const stockChartOptions = {
 			{
 				type: "month",
 				count: 3,
-				text: "3m",
+				text: "3M",
 				events: {
 					click: function () {
 						console.log("3 month");
 					},
 				},
 			},
-			{
-				type: "month",
-				count: 6,
-				text: "6m",
-				events: {
-					click: function () {
-						console.log("6 month");
-					},
-				},
-			},
+			// {
+			// 	type: "month",
+			// 	count: 6,
+			// 	text: "6m",
+			// 	events: {
+			// 		click: function () {
+			// 			console.log("6 month");
+			// 		},
+			// 	},
+			// },
 			{
 				type: "ytd",
 				text: "YTD",
@@ -290,7 +341,7 @@ export const stockChartOptions = {
 			{
 				type: "year",
 				count: 1,
-				text: "1y",
+				text: "1Y",
 				events: {
 					click: function () {
 						console.log("1 year");
@@ -299,7 +350,7 @@ export const stockChartOptions = {
 			},
 			{
 				type: "all",
-				text: "All",
+				text: "ALL",
 			},
 		],
 	},
