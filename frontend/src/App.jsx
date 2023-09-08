@@ -2,7 +2,7 @@ import SplashContainer from "./components/Splash/splash_container";
 import LoginFormContainer from "./components/Auth/login_form_container";
 import RegisterFormContainer from "./components/Auth/register_form_container";
 import { Routes, Route } from "react-router-dom";
-
+import BuySellForm from "./components/BuySellForm/buysellform";
 function App() {
 	return (
 		<div className="h-screen">
@@ -21,6 +21,11 @@ function App() {
 					exact
 					path="/"
 					Component={SplashContainer}
+				/>
+				<Route
+					exact
+					path="/buy"
+					Component={BuySellForm}
 				/>
 			</Routes>
 		</div>
