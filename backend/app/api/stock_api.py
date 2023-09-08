@@ -22,7 +22,7 @@ def api_data(url):
 def ticker_list(stocks):
     newlist = []
     count = 0
-    while count <= 200:
+    while count <= 2000:
         newlist.append(
             {"ticker_name": stocks[count]["T"], "close_price": stocks[count]['c']})
         count += 1
@@ -31,16 +31,19 @@ def ticker_list(stocks):
 
 def convert_symbol_to_company(ticker_list):
     stock_list = []
-    for ticker in ticker_list:
-        if (not ticker['ticker_name'].isupper()):
-            continue
-        else:
-            current_ticker = yf.Ticker(ticker['ticker_name'])
-            stock_list.append({
-                'symbol': ticker['ticker_name'],
-                "org_name": current_ticker.info['longName'],
-                "current_price": ticker['close_price']
-            })
+    for ticker_info in ticker_list:
+        ticker_name = ticker_info['ticker_name']
+        try:
+            ticker = yf.Ticker(ticker_name)
+            long_name = ticker.info.get('longName', None)
+            if long_name:
+                stock_list.append({
+                    'symbol': ticker_name,
+                    'org_name': long_name,
+                    'current_price': ticker_info['close_price']
+                })
+        except Exception as e:
+            print(f"Error fetching data for {ticker_name}: {str(e)}")
     return stock_list
 
 
