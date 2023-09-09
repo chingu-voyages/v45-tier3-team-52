@@ -10,9 +10,13 @@ auth_routes = Blueprint("auth", __name__)
 @auth_routes.route("/login", methods=['POST'])
 def login():
     form = LoginForm()
+    print('----->', form.data)
+    print('------request',request.json)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        print('---......>>>','what is it')
         user = User.query.filter(User.email == form.data['email']).first()
+        print('------>',user)
         login_user(user)
         return user.to_dict()
     return {'error': 'failed to log in'}, 401
