@@ -5,7 +5,22 @@ const Profile = () => {
 	const [modal, setModal] = useState(false);
 	return (
 		<body className="font-times text-base ml-4 mr-12">
-			{modal && <div onClick={() => setModal(false)}>Modal</div>}
+			{modal && (
+				<div onClick={() => setModal(false)}>
+					<section className="flex justify-between w-full">
+						<div className="">
+							<p className="text-xl font-bold">Edit Profile</p>
+						</div>
+						<div className="flex h-full">
+							<button
+								className="rounded-full  text-2xl font-medium"
+								onClick={() => setModal(false)}>
+								X
+							</button>
+						</div>
+					</section>
+				</div>
+			)}
 			<div className="mt-5 ml-20">
 				{/* Personal Information */}
 				<section className="flex justify-between w-full">
