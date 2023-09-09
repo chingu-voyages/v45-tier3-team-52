@@ -1,8 +1,15 @@
 // import React from "react";
 import React, { useState } from "react";
+const textInputStyle = "text-xs";
+const inputStyle =
+	"border-solid border-gray-300 border w-full mt-2 py-1 px-2 rounded text-black";
 
 const Profile = () => {
 	const [modal, setModal] = useState(false);
+	const [firstName, setfirstName] = useState("");
+	const [lastName, setLastName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 	return (
 		<body className="font-times text-base ml-4 mr-12">
 			{modal && (
@@ -19,6 +26,68 @@ const Profile = () => {
 							</button>
 						</div>
 					</section>
+					<div className="flex justify-center mt-10">
+						<img
+							src="pic_trulli.jpg"
+							alt="profile image"
+						/>
+					</div>
+					<div>
+						<div className="flex flex-col gap-5 md:flex-row lg:flex-col">
+							<div className="w-full">
+								<label htmlFor="first-name">
+									<div className={textInputStyle}>First Name</div>
+								</label>
+								<input
+									id="first-name"
+									type="text"
+									value={firstName}
+									onChange={e => setfirstName(e.target.value)}
+									required
+									className={inputStyle}
+								/>
+							</div>
+							<div className="w-full">
+								<label htmlFor="last-name">
+									<div className={textInputStyle}>Last Name</div>
+								</label>
+								<input
+									id="last-name"
+									type="text"
+									value={lastName}
+									onChange={e => setLastName(e.target.value)}
+									required
+									className={inputStyle}
+								/>
+							</div>
+							<div>
+								<label htmlFor="email-address">
+									<div className={textInputStyle}>Email address</div>
+								</label>
+								<input
+									id="email-address"
+									type="text"
+									value={email}
+									onChange={e => setEmail(e.target.value)}
+									required
+									className={inputStyle}
+								/>
+							</div>
+							<div>
+								<label htmlFor="password">
+									<div className={textInputStyle}>Password</div>
+								</label>
+								<input
+									id="password"
+									type="password"
+									value={password}
+									onChange={e => setPassword(e.target.value)}
+									required
+									className={inputStyle}
+								/>
+							</div>
+						</div>
+					</div>
 				</div>
 			)}
 			<div className="mt-5 ml-20">
