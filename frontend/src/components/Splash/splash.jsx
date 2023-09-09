@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router";
 // import splashBG from "/splashBG.jpeg";
 

@@ -12,8 +12,8 @@ class Transaction(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    # pending, processed, etc
     status = db.Column(db.String(255), nullable=False, default="In-progress")
+    total = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -30,7 +30,8 @@ class Transaction(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
-            'userid': self.user_id,
+            'userId': self.user_id,
             'status': self.status,
-            'stocks': [stock.to_dict() for stock in self.transactions_stock]
+            'stocks': [stock.to_dict() for stock in self.transactions_stock],
+            'total': self.total,
         }

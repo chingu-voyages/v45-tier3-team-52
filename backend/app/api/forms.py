@@ -19,16 +19,9 @@ class RegisterForm(FlaskForm):
 
 
 class LoginForm(FlaskForm):
-    email = StringField(validators=[DataRequired(), Length(
-        min=4, max=40)])
-
-    password = StringField(validators=[DataRequired(), Length(
+    email = StringField('email', validators=[DataRequired(), validate_email])
+    password = StringField('password', validators=[DataRequired(), Length(
         min=9, max=40)])
-
-    def validate_email(self, email):
-        user = User.query.filter_by(email=email.data).first()
-        if not user:
-            raise ValidationError('Email provided does not exist')
 
     def valid_credentials(self, password, email):
         user = User.query.filter_by(email=email.data).first()

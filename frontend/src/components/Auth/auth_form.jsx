@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router";
 // import robinhood from "../../assets/robinhoodBG.jpeg";
 
@@ -13,7 +13,7 @@ const AuthForm = props => {
 	const navigate = useNavigate();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [firstName, setfirstName] = useState("");
+	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 
 	const registerName = (
@@ -26,7 +26,7 @@ const AuthForm = props => {
 					id="first-name"
 					type="text"
 					value={firstName}
-					onChange={e => setfirstName(e.target.value)}
+					onChange={e => setFirstName(e.target.value)}
 					required
 					className={inputStyle}
 				/>
@@ -62,8 +62,8 @@ const AuthForm = props => {
 					<div className="flex flex-col gap-12">
 						<h1 className="text-7xl leading-[5rem]">Create your login</h1>
 						<p>
-							We'll need your name, email address and a unique password. You'll
-							use this login to access Robinhood next time.
+							We&apos;ll need your name, email address and a unique password.
+							You&apos;ll use this login to access Robinhood next time.
 						</p>
 					</div>
 				</div>
