@@ -37,5 +37,4 @@ class Stock(db.Model):
             'current_price': self.current_price,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
-            'portfolio': [portfolio.to_dict() for portfolio in self.stock_portfolio]
         }
