@@ -1,17 +1,13 @@
-import { createStore, applyMiddleware } from "redux";
-import logger from "redux-logger";
-import thunk from "redux-thunk";
-import rootReducer from "../reducers/root_reducer";
+import { configureStore } from "@reduxjs/toolkit";
+import authReducer from "../components/Auth/authSlice";
+import stockReducer from "../components/Stock/stockSlice";
+import transactionReducer from "../components/Transaction/transactionSlice";
 
-const middlewares = [thunk];
-
-// if (process.env.NODE_ENV !== "production") {
-// 	// must use 'require' (import only allowed at top of file)
-// 	const { logger } = require("redux-logger");
-// 	middlewares.push(logger);
-// }
-
-const configureStore = (preloadedState = {}) =>
-	createStore(rootReducer, preloadedState, applyMiddleware(...middlewares));
-
-export default configureStore;
+export const store = configureStore({
+	reducer: {
+		session: authReducer,
+		// profile: userReducer,
+		stock: stockReducer,
+		transaction: transactionReducer,
+	},
+});

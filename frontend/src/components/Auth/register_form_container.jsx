@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { register, clearErrors } from "../../actions/auth_actions";
+// import { register, clearErrors } from "../../actions/auth_actions";
 import AuthForm from "./auth_form";
 import { useNavigate } from "react-router-dom";
 
@@ -13,8 +13,8 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => ({
-	processForm: user => dispatch(register(user)),
+	// processForm: user => dispatch(register(user)),
 	// clearErrors: () => dispatch(clearErrors()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
+// export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
