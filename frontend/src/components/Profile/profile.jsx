@@ -1,6 +1,6 @@
 // import React from "react";
 import React, { useState } from "react";
-const textInputStyle = "text-xs";
+const textInputStyle = "text-s font-bold";
 const inputStyle =
 	"border-solid border-gray-300 border w-full mt-2 py-1 px-2 rounded text-black";
 
@@ -13,7 +13,9 @@ const Profile = () => {
 	return (
 		<body className="font-times text-base ml-4 mr-12">
 			{modal && (
-				<div onClick={() => setModal(false)}>
+				<div
+					className="mx-10 mt-10"
+					onClick={() => setModal(false)}>
 					<section className="flex justify-between w-full">
 						<div className="">
 							<p className="text-xl font-bold">Edit Profile</p>
@@ -33,7 +35,7 @@ const Profile = () => {
 						/>
 					</div>
 					<div>
-						<div className="flex flex-col gap-5 md:flex-row lg:flex-col">
+						<div className="flex flex-col gap-5">
 							<div className="w-full">
 								<label htmlFor="first-name">
 									<div className={textInputStyle}>First Name</div>
