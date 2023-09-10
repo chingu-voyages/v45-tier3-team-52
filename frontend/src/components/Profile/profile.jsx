@@ -4,14 +4,6 @@ const textInputStyle = "text-s font-bold";
 const inputStyle =
 	"border-solid border-gray-300 border w-full mt-2 py-1 px-2 rounded text-black";
 
-const handleColorClick = color => {
-	if (selectedColor === color) {
-		setSelectedColor(null); // Deselect if already selected
-	} else {
-		setSelectedColor(color); // Select the clicked color
-	}
-};
-
 const Profile = () => {
 	const [modal, setModal] = useState(false);
 	const [firstName, setfirstName] = useState("");
@@ -19,6 +11,14 @@ const Profile = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [selectedColor, setSelectedColor] = useState(null);
+
+	const handleColorClick = color => {
+		if (selectedColor === color) {
+			setSelectedColor(null); // Deselect if already selected
+		} else {
+			setSelectedColor(color); // Select the clicked color
+		}
+	};
 
 	return (
 		<body className="font-times text-base ml-4 mr-12">
@@ -103,7 +103,7 @@ const Profile = () => {
 							<div className="mt-10 flex justify-center items-center gap-2 ">
 								<button
 									className={`w-16 h-16 bg-orange-500 rounded-full focus:border-white ${
-										selectedColor === "orange" ? "border-white" : ""
+										selectedColor === "orange" ? "border-white border-4" : ""
 									}`}
 									onClick={() => handleColorClick("orange")}></button>
 								<button
