@@ -27,13 +27,15 @@ const Profile = () => {
 								</button>
 							</div>
 						</section>
-						<div className="flex justify-center mt-4">
-							<img
-								src="pic_trulli.jpg"
-								alt="profile image"
-							/>
-						</div>
-						<div>
+						<div className="flex flex-col">
+							<div className="mb-10 text-center">
+								<div className="w-32 h-24 mx-auto">
+									<img
+										src="/profileImage.jpeg"
+										alt="profile image"
+									/>
+								</div>
+							</div>
 							<div className="flex flex-col gap-5">
 								<div className="w-full">
 									<label htmlFor="first-name">
