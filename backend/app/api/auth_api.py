@@ -1,7 +1,7 @@
 from flask import Blueprint, redirect, url_for, request
 from flask_login import login_user, logout_user
 from app.models import User, db
-from .forms import LoginForm, RegisterForm
+from ..forms import LoginForm, SignUpForm
 
 
 auth_routes = Blueprint("auth", __name__)
@@ -20,7 +20,7 @@ def login():
 
 @auth_routes.route("/register", methods=['POST'])
 def register():
-    form = RegisterForm()
+    form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         new_user = User(
@@ -39,4 +39,4 @@ def register():
 @auth_routes.route("/logout")
 def logout():
     logout_user()
-    return {"message": "logout works"}
+    return {"message": "User was logged out"}
