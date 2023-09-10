@@ -14,7 +14,7 @@ const Profile = () => {
 		<body className="font-times text-base ml-4 mr-12">
 			{modal && (
 				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 overflow-y-auto">
-					<div className="bg-white p-4 rounded-lg w-4/12 h-3/6">
+					<div className="bg-white p-4 rounded-lg w-4/12">
 						<section className="flex justify-between w-full">
 							<div className="">
 								<p className="text-xl font-bold">Edit Profile</p>
@@ -88,6 +88,11 @@ const Profile = () => {
 									/>
 								</div>
 							</div>
+						</div>
+						<div className="flex justify-center mt-20">
+							<button className="rounded-full border-2 text-l font-bold p-4 w-10/12 text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">
+								Save Changes
+							</button>
 						</div>
 					</div>
 				</div>
