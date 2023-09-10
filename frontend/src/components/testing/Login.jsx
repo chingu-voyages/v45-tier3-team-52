@@ -13,9 +13,9 @@ const Login = () => {
 	const test = useSelector(state => state.auth);
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	useEffect(() => {
-		async () => {};
-	});
+	// useEffect(() => {
+	// 	async () => {};
+	// });
 
 	const handleLoginEvent = e => {
 		e.preventDefault();

@@ -20,7 +20,7 @@ function App() {
 				<Route
 					exact
 					path="/login"
-					Component={AuthForm}
+					Component={Login}
 				/>
 				{/* <Route
 					exact

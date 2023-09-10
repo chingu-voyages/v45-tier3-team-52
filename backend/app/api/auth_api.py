@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, url_for, request
+from flask import Blueprint, request
 from flask_login import login_user, logout_user
 from app.models import User, db
 from ..forms import LoginForm, SignUpForm
@@ -7,15 +7,27 @@ from ..forms import LoginForm, SignUpForm
 auth_routes = Blueprint("auth", __name__)
 
 
+def validation_errors_to_error_messages(validation_errors):
+    """
+    Simple function that turns the WTForms validation errors into a simple list
+    """
+    errorMessages = []
+    for field in validation_errors:
+        for error in validation_errors[field]:
+            errorMessages.append(f'{field} : {error}')
+    return errorMessages
+
+
 @auth_routes.route("/login", methods=['POST'])
 def login():
     form = LoginForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print("===> form ", form.data)
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
-    return {'error': 'failed to log in'}, 401
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 @auth_routes.route("/register", methods=['POST'])
@@ -33,7 +45,8 @@ def register():
         db.session.commit()
         login_user(new_user)
         return new_user.to_dict()
-    return {'error': 'registration failed'}, 401
+    else:
+        return {'error': 'registration failed'}, 401
 
 
 @auth_routes.route("/logout")

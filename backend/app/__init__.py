@@ -26,9 +26,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# Application Security
-CORS(app)
-
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
