@@ -90,7 +90,15 @@ const Profile = () => {
 									/>
 								</div>
 							</div>
+							<div className="mt-10 flex justify-center items-center gap-2 ">
+								<div className="w-16 h-16 bg-orange-500 rounded-full"></div>
+								<div className="w-16 h-16 bg-pink-500 rounded-full"></div>
+								<div className="w-16 h-16 bg-purple-500 rounded-full"></div>
+								<div className="w-16 h-16 bg-blue-500 rounded-full"></div>
+								<div className="w-16 h-16 bg-green-500 rounded-full"></div>
+							</div>
 						</div>
+
 						<div className="flex justify-center mt-20">
 							<button className="rounded-full border-2 text-l font-bold p-4 w-10/12 text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">
 								Save Changes
