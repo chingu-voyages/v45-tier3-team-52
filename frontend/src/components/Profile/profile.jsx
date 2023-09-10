@@ -110,9 +110,20 @@ const Profile = () => {
 			<div className="mt-5 ml-20">
 				{/* Personal Information */}
 				<section className="flex justify-between w-full">
-					<div className="mb-10">
-						<p className="text-3xl mt-2 ml-12 font-medium">Jonathan s</p>
-						<p className="mt-2 ml-12 text-xl">@jsiu1248 . Joined 2015</p>
+					<div className="mb-10 flex items-center">
+						<div className="w-32 h-24 mx-auto">
+							<img
+								src="/profileImage.jpeg"
+								alt="profile image"
+							/>
+						</div>
+						<div className="ml-4">
+							<p className="text-3xl font-medium">Jonathan s</p>
+							<div className="mt-2 flex">
+								<p className="text-xl">@jsiu1248 </p>
+								<p className="text-xl"> · Joined 2015</p>
+							</div>
+						</div>
 					</div>
 					<div className="flex items-center h-full">
 						<button
