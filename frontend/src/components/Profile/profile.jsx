@@ -160,7 +160,11 @@ const Profile = () => {
 					</div>
 					<div className="flex items-center h-full">
 						<button
-							className="rounded-full border-2 text-l font-bold p-2 px-6 border-black"
+							className={`rounded-full border-2 text-l font-bold p-2 px-6 ${
+								selectedColor
+									? `border-${selectedColor}-500 text-${selectedColor}-500`
+									: "border-black text-black"
+							}`}
 							onClick={() => setModal(true)}>
 							Edit Profile
 						</button>
