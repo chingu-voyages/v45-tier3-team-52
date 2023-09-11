@@ -99,8 +99,8 @@ const Profile = () => {
 							</div>
 							<div className="mt-10 flex justify-center items-center gap-2 ">
 								<button
-									className={`w-16 h-16 bg-orange-500 rounded-full focus:border-white ${
-										selectedColor === "orange" ? "border-white border-4" : ""
+									className={`w-16 h-16 bg-orange-500 rounded-full focus:border-double border-4 border-white ${
+										selectedColor === "orange" ? "border-white" : ""
 									}`}
 									onClick={() => handleColorClick("orange")}></button>
 								<button
