@@ -13,11 +13,8 @@ const Profile = () => {
 	const [selectedColor, setSelectedColor] = useState(null);
 
 	const handleColorClick = color => {
-		if (selectedColor === color) {
-			setSelectedColor(null); // Deselect if already selected
-		} else {
-			setSelectedColor(color); // Select the clicked color
-		}
+		console.log(`Color clicked: ${color}`);
+		setSelectedColor(color);
 	};
 
 	return (
@@ -130,7 +127,13 @@ const Profile = () => {
 						</div>
 
 						<div className="flex justify-center mt-20">
-							<button className="rounded-full border-2 text-l font-bold p-4 w-10/12 text-white bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600">
+							<button
+								className={`rounded-full border-2 text-l font-bold p-4 w-10/12 text-white ${
+									selectedColor
+										? `bg-${selectedColor}-500 border-${selectedColor}-500 hover:bg-${selectedColor}-600 hover:border-${selectedColor}-600`
+										: "bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600"
+								}`}
+								onClick={() => setModal(true)}>
 								Save Changes
 							</button>
 						</div>
