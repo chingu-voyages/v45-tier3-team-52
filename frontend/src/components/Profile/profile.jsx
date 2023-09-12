@@ -96,32 +96,35 @@ const Profile = () => {
 									/>
 								</div>
 							</div>
-							<div className="mt-10 flex justify-center items-center gap-2 ">
-								<button
-									className={`w-16 h-16 bg-orange-500 rounded-full focus:border-double border-4 border-white ${
-										selectedColor === "orange" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("orange")}></button>
-								<button
-									className={`w-16 h-16 bg-pink-500 rounded-full focus:border-double border-4 border-white ${
-										selectedColor === "pink" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("pink")}></button>
-								<button
-									className={`w-16 h-16 bg-purple-500 rounded-full focus:border-double border-4 border-white ${
-										selectedColor === "purple" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("purple")}></button>
-								<button
-									className={`w-16 h-16 bg-blue-500 rounded-full focus:border-double border-4 border-white ${
-										selectedColor === "blue" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("blue")}></button>
-								<button
-									className={`w-16 h-16 bg-green-500 rounded-full focus:border-double border-4 border-white ${
-										selectedColor === "green" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("green")}></button>
+							<div className="mt-10 ">
+								<p className="text-s font-bold text-left mb-2">Theme</p>
+								<div className="flex justify-center gap-2">
+									<button
+										className={`w-20 h-20 bg-orange-500 rounded-full focus:border-double border-4 border-white ${
+											selectedColor === "orange" ? "border-white" : ""
+										}`}
+										onClick={() => handleColorClick("orange")}></button>
+									<button
+										className={`w-20 h-20 bg-pink-500 rounded-full focus:border-double border-4 border-white ${
+											selectedColor === "pink" ? "border-white" : ""
+										}`}
+										onClick={() => handleColorClick("pink")}></button>
+									<button
+										className={`w-20 h-20 bg-purple-500 rounded-full focus:border-double border-4 border-white ${
+											selectedColor === "purple" ? "border-white" : ""
+										}`}
+										onClick={() => handleColorClick("purple")}></button>
+									<button
+										className={`w-20 h-20 bg-blue-500 rounded-full focus:border-double border-4 border-white ${
+											selectedColor === "blue" ? "border-white" : ""
+										}`}
+										onClick={() => handleColorClick("blue")}></button>
+									<button
+										className={`w-20 h-20 bg-green-500 rounded-full focus:border-double border-4 border-white ${
+											selectedColor === "green" ? "border-white" : ""
+										}`}
+										onClick={() => handleColorClick("green")}></button>
+								</div>
 							</div>
 						</div>
 
