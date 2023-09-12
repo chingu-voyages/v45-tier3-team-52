@@ -1,12 +1,16 @@
-// import React from "react";
 import React, { useState } from "react";
+
 const textInputStyle = "text-s font-bold";
 const inputStyle =
 	"border-solid border-gray-300 border w-full mt-2 py-1 px-2 rounded text-black";
+const buttonStyle = "rounded-full text-white text-l font-bold p-2 px-6";
+const selectedButtonStyle = "border-double border-4 border-white";
+
+const colors = ["orange", "pink", "purple", "blue", "green"];
 
 const Profile = () => {
 	const [modal, setModal] = useState(false);
-	const [firstName, setfirstName] = useState("");
+	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
@@ -52,7 +56,7 @@ const Profile = () => {
 										id="first-name"
 										type="text"
 										value={firstName}
-										onChange={e => setfirstName(e.target.value)}
+										onChange={e => setFirstName(e.target.value)}
 										required
 										className={inputStyle}
 									/>
@@ -97,38 +101,21 @@ const Profile = () => {
 									/>
 								</div>
 							</div>
-							<div className="mt-10 flex justify-center items-center gap-2 ">
-								<button
-									className={`w-16 h-16 bg-orange-500 rounded-full focus:border-double border-4 border-white ${
-										selectedColor === "orange" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("orange")}></button>
-								<button
-									className={`w-16 h-16 bg-pink-500 rounded-full focus:border-white ${
-										selectedColor === "pink" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("pink")}></button>
-								<button
-									className={`w-16 h-16 bg-purple-500 rounded-full focus:border-white ${
-										selectedColor === "purple" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("purple")}></button>
-								<button
-									className={`w-16 h-16 bg-blue-500 rounded-full focus:border-white ${
-										selectedColor === "blue" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("blue")}></button>
-								<button
-									className={`w-16 h-16 bg-green-500 rounded-full focus:border-white ${
-										selectedColor === "green" ? "border-white" : ""
-									}`}
-									onClick={() => handleColorClick("green")}></button>
+							<div className="mt-10 flex justify-center items-center gap-2">
+								{colors.map(color => (
+									<button
+										key={color}
+										className={`w-16 h-16 bg-${color}-500 rounded-full focus:border-double border-4 border-white ${
+											selectedColor === color ? "border-white" : ""
+										}`}
+										onClick={() => handleColorClick(color)}></button>
+								))}
 							</div>
 						</div>
 
 						<div className="flex justify-center mt-20">
 							<button
-								className={`rounded-full border-2 text-l font-bold p-4 w-10/12 text-white ${
+								className={`${buttonStyle} ${
 									selectedColor
 										? `bg-${selectedColor}-500 border-${selectedColor}-500 hover:bg-${selectedColor}-600 hover:border-${selectedColor}-600`
 										: "bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600"
@@ -160,10 +147,10 @@ const Profile = () => {
 					</div>
 					<div className="flex items-center h-full">
 						<button
-							className={`rounded-full border-2 text-white text-l font-bold p-2 px-6 ${
+							className={`${buttonStyle} ${
 								selectedColor
 									? `border-${selectedColor}-500 hover:border-${selectedColor}-600`
-									: "border-black"
+									: "border-white"
 							} ${
 								selectedColor
 									? `bg-${selectedColor}-500 hover:bg-${selectedColor}-600`
