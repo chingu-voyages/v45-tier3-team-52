@@ -1,7 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_user, logout_user
-from app.models import User, db
-from ..forms import LoginForm, SignUpForm
+from app.models import User, db, UserPortfolio
+from app.forms import LoginForm, SignUpForm
 
 
 auth_routes = Blueprint("auth", __name__)
@@ -21,10 +21,14 @@ def validation_errors_to_error_messages(validation_errors):
 @auth_routes.route("/login", methods=['POST'])
 def login():
     form = LoginForm()
+    print("userdata ===> ", type(form.data['email']))
     form['csrf_token'].data = request.cookies['csrf_token']
-    print("===> form ", form.data)
+    print("Request Form Data ===>", request.form)
+    print("Request Cookies ===>", request.cookies)
+
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email']).first()
+        print("queried user ===>", user)
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
@@ -43,10 +47,15 @@ def register():
         )
         db.session.add(new_user)
         db.session.commit()
+        new_portfolio_user = UserPortfolio(
+            user_id=new_user.id
+        )
+        db.session.add(new_portfolio_user)
+        db.session.commit()
         login_user(new_user)
         return new_user.to_dict()
     else:
-        return {'error': 'registration failed'}, 401
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
 @auth_routes.route("/logout")

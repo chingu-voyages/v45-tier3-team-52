@@ -12,7 +12,7 @@ auth_error = "User not authorized to complete this action"
 def user(id):
     user = User.query.get_or_404(id)
     return user.to_dict()
-    # return {"message": "This works"}
+
 
 ###### * Delete User #################################
 

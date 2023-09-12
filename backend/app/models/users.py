@@ -45,9 +45,13 @@ class User(db.Model, UserMixin):
         return check_password_hash(self.password, password)
 
     def to_dict(self):
+        portfolio_dict = None
+        if self.owner_portfolio:
+            portfolio_dict = self.owner_portfolio[0].to_dict()
         return {
             'id': self.id,
             'first_name': self.first_name,
             'last_name':  self.last_name,
+            'portfolio': portfolio_dict,
             'userTransactions': [transaction.to_dict() for transaction in self.owner_transactions]
         }

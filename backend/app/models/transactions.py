@@ -14,6 +14,8 @@ class Transaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     status = db.Column(db.String(255), nullable=False, default="In-progress")
     total = db.Column(db.Integer, default=0)
+    portfolio_id = db.Column(db.Integer, db.ForeignKey(
+        'user_portfolios.id'), nullable=False)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -31,7 +33,8 @@ class Transaction(db.Model):
         return {
             'id': self.id,
             'userId': self.user_id,
+            'portfolioId': self.portfolio_id,
             'status': self.status,
-            'stocks': [stock.to_dict() for stock in self.transactions_stock],
             'total': self.total,
+            'stocks': [stock.to_dict() for stock in self.transactions_stock],
         }

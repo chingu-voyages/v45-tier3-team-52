@@ -14,9 +14,12 @@ class UserPortfolio(db.Model):
         __table_args__ = {'schema': SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(64), nullable=False)  # what does name mean?
+    name = db.Column(db.String(64), nullable=False,
+                     default='Portfolio')
+    market_value = db.Column(db.Float, default=0.00)
     user_id = db.Column(db.Integer, db.ForeignKey(
         add_prefix_for_prod('users.id')), nullable=False)
+
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -28,10 +31,12 @@ class UserPortfolio(db.Model):
 
     # ! Relationships
 
+    transactions = db.relationship(
+        'Transaction', backref='portfolio', lazy=True)
     portfolio_owner = db.relationship(
         'User', back_populates='owner_portfolio')
-    portfolio_stock = db.relationship(
-        'Stock', secondary=PortfolioStocks, back_populates='stock_portfolio')
+    # portfolio_stock = db.relationship(
+    #     'Stock', secondary=PortfolioStocks, back_populates='stock_portfolio')
 
     # ? Methods
 
@@ -39,5 +44,7 @@ class UserPortfolio(db.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'ownerId': self.user_id
+            'ownerId': self.user_id,
+            'marketValue': self.market_value,
+            'transactions': [transaction.to_dict() for transaction in self.transactions]
         }

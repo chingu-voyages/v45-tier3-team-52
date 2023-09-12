@@ -11,7 +11,19 @@ def seed_portfolio():
                                                                                    "user_id": 5}, {"name": "longTerm",
                                                                                                    "user_id": 6}, {"name": "Savings",
                                                                                                                    "user_id": 7}, {"name": "wallet",
-                                                                                                                                   "user_id": 8}]
+                                                                                                                                   "user_id": 8}, {"name": "wallet",
+                                                                                                                                                   "user_id": 9}, {"name": "wallet",
+                                                                                                                                                                   "user_id": 10}, {"name": "wallet",
+                                                                                                                                                                                    "user_id": 11}, {"name": "wallet",
+                                                                                                                                                                                                     "user_id": 12}, {"name": "wallet",
+                                                                                                                                                                                                                      "user_id": 13}, {"name": "wallet",
+                                                                                                                                                                                                                                       "user_id": 14}, {"name": "wallet",
+                                                                                                                                                                                                                                                        "user_id": 15}, {"name": "wallet",
+                                                                                                                                                                                                                                                                         "user_id": 16}, {"name": "wallet",
+                                                                                                                                                                                                                                                                                          "user_id": 17}, {"name": "wallet",
+                                                                                                                                                                                                                                                                                                           "user_id": 18}, {"name": "wallet",
+                                                                                                                                                                                                                                                                                                                            "user_id": 19}, {"name": "wallet",
+                                                                                                                                                                                                                                                                                                                                             "user_id": 20}]
 
     db.session.add_all([UserPortfolio(**portfolio)for portfolio in portfolios])
     db.session.commit()

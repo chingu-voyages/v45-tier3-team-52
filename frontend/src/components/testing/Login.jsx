@@ -1,71 +1,26 @@
-import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../Auth/authSlice";
-import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-	// states
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-
-	// redux state
-
-	const test = useSelector(state => state.auth);
-	const navigate = useNavigate();
 	const dispatch = useDispatch();
-	// useEffect(() => {
-	// 	async () => {};
-	// });
-
-	const handleLoginEvent = e => {
-		e.preventDefault();
-		let userCredentials = {
-			email,
-			password,
+	const demoLogin = async () => {
+		const userCredentials = {
+			email: "cantuk0@harvard.edu",
+			password: "zF8*wiaMl",
 		};
-		dispatch(loginUser(userCredentials)).then(result => {
-			if (result.payload) {
-				setEmail("");
-				setPassword("");
-				navigate("/");
-			}
-		});
+		await dispatch(loginUser(userCredentials));
 	};
 
 	return (
-		<form onSubmit={handleLoginEvent}>
-			<label>Email</label>
-			<input
-				type="email"
-				required
-				className=""
-				value={email}
-				onChange={e => setEmail(e.target.value)}
-			/>
-			<br />
-			<label>Password</label>
-			<input
-				type="password"
-				required
-				className=""
-				value={password}
-				onChange={e => setPassword(e.target.value)}
-			/>
-			<br />
+		<div>
 			<button
-				type="submit"
-				className="">
-				{/* {loading ? "Loading..." : "Login"} */}
-				Login
+				onClick={() => {
+					demoLogin();
+				}}
+				className="cursor-pointer p-[2px] text-sm text-blue-700 font-bold md:text-sm whitespace-nowrap rounded-lg focus:outline-none focus:ring-2 bg-gradient-to-b from-slate-100 to-slate-200 focus:ring-yellow-500 active:from-slate-200 px-3 py-2 border-[1px] border-ninja_green-dark">
+				Demo Login
 			</button>
-			{/* {error && (
-				<div
-					className=""
-					role="alert">
-					{error}
-				</div>
-			)} */}
-		</form>
+		</div>
 	);
 };
 
