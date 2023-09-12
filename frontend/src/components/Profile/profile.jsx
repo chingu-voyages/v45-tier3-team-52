@@ -11,6 +11,11 @@ const Profile = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [selectedColor, setSelectedColor] = useState(null);
+	const [investingValue, setInvestingValue] = useState("");
+	const [holdings, setHoldings] = useState("");
+	const [cash, setCash] = useState("");
+	const [accountValue, setAccountValue] = useState("");
+	const [joinDate, setJoinDate] = useState("");
 
 	const handleColorClick = color => {
 		setSelectedColor(color);
@@ -157,8 +162,8 @@ const Profile = () => {
 								{firstName} {lastName}
 							</p>
 							<div className="mt-2 flex">
-								<p className="text-xl">@jsiu1248 </p>
-								<p className="text-xl"> · Joined 2015</p>
+								<p className="text-xl">{email} </p>
+								<p className="text-xl"> · Joined {joinDate}</p>
 							</div>
 						</div>
 					</div>
@@ -181,7 +186,7 @@ const Profile = () => {
 
 				{/* Total Portfolio */}
 				<div className="mb-10">
-					<p className="text-4xl font-medium ">$Amount</p>
+					<p className="text-4xl font-medium ">${investingValue}</p>
 					<p className="">Total in Robinhood</p>
 				</div>
 
@@ -192,15 +197,17 @@ const Profile = () => {
 					<table className="w-full">
 						<tr>
 							<td className="p-2 font-medium text-xl">Total investing value</td>
-							<td className="p-2 font-bold text-xl text-right">$Amount</td>
+							<td className="p-2 font-bold text-xl text-right">
+								${investingValue}
+							</td>
 						</tr>
 						<tr>
 							<td className="p-2 text-gray-500">Brokerage holdings</td>
-							<td className="p-2 text-right">$Amount</td>
+							<td className="p-2 text-right">${holdings}</td>
 						</tr>
 						<tr>
 							<td className="p-2 text-gray-500">Brokerage cash</td>
-							<td className="p-2 text-right">$Amount</td>
+							<td className="p-2 text-right">${cash}</td>
 						</tr>
 					</table>
 				</div>
@@ -212,7 +219,9 @@ const Profile = () => {
 					<table className="w-full">
 						<tr>
 							<td className="p-2 font-medium text-xl">Account value</td>
-							<td className="p-2 font-bold text-xl text-right">$0.00</td>
+							<td className="p-2 font-bold text-xl text-right">
+								${accountValue}
+							</td>
 						</tr>
 					</table>
 				</div>
