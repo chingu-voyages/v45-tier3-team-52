@@ -3,10 +3,6 @@ import React, { useState } from "react";
 const textInputStyle = "text-s font-bold";
 const inputStyle =
 	"border-solid border-gray-300 border w-full mt-2 py-1 px-2 rounded text-black";
-const buttonStyle = "rounded-full text-white text-l font-bold p-2 px-6";
-const selectedButtonStyle = "border-double border-4 border-white";
-
-const colors = ["orange", "pink", "purple", "blue", "green"];
 
 const Profile = () => {
 	const [modal, setModal] = useState(false);
@@ -17,17 +13,16 @@ const Profile = () => {
 	const [selectedColor, setSelectedColor] = useState(null);
 
 	const handleColorClick = color => {
-		console.log(`Color clicked: ${color}`);
 		setSelectedColor(color);
 	};
 
 	return (
-		<body className="font-times text-base ml-4 mr-12">
+		<div className="font-times text-base ml-4 mr-12">
 			{modal && (
 				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 overflow-y-auto">
 					<div className="bg-white p-4 rounded-lg w-4/12">
 						<section className="flex justify-between w-full">
-							<div className="">
+							<div>
 								<p className="text-xl font-bold">Edit Profile</p>
 							</div>
 							<div className="flex h-full">
@@ -101,21 +96,38 @@ const Profile = () => {
 									/>
 								</div>
 							</div>
-							<div className="mt-10 flex justify-center items-center gap-2">
-								{colors.map(color => (
-									<button
-										key={color}
-										className={`w-16 h-16 bg-${color}-500 rounded-full focus:border-double border-4 border-white ${
-											selectedColor === color ? "border-white" : ""
-										}`}
-										onClick={() => handleColorClick(color)}></button>
-								))}
+							<div className="mt-10 flex justify-center items-center gap-2 ">
+								<button
+									className={`w-16 h-16 bg-orange-500 rounded-full focus:border-double border-4 border-white ${
+										selectedColor === "orange" ? "border-white" : ""
+									}`}
+									onClick={() => handleColorClick("orange")}></button>
+								<button
+									className={`w-16 h-16 bg-pink-500 rounded-full focus:border-double border-4 border-white ${
+										selectedColor === "pink" ? "border-white" : ""
+									}`}
+									onClick={() => handleColorClick("pink")}></button>
+								<button
+									className={`w-16 h-16 bg-purple-500 rounded-full focus:border-double border-4 border-white ${
+										selectedColor === "purple" ? "border-white" : ""
+									}`}
+									onClick={() => handleColorClick("purple")}></button>
+								<button
+									className={`w-16 h-16 bg-blue-500 rounded-full focus:border-double border-4 border-white ${
+										selectedColor === "blue" ? "border-white" : ""
+									}`}
+									onClick={() => handleColorClick("blue")}></button>
+								<button
+									className={`w-16 h-16 bg-green-500 rounded-full focus:border-double border-4 border-white ${
+										selectedColor === "green" ? "border-white" : ""
+									}`}
+									onClick={() => handleColorClick("green")}></button>
 							</div>
 						</div>
 
 						<div className="flex justify-center mt-20">
 							<button
-								className={`${buttonStyle} ${
+								className={`rounded-full border-2 text-l font-bold p-4 w-10/12 text-white ${
 									selectedColor
 										? `bg-${selectedColor}-500 border-${selectedColor}-500 hover:bg-${selectedColor}-600 hover:border-${selectedColor}-600`
 										: "bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600"
@@ -138,7 +150,9 @@ const Profile = () => {
 							/>
 						</div>
 						<div className="ml-4">
-							<p className="text-3xl font-medium">Jonathan s</p>
+							<p className="text-3xl font-medium">
+								{firstName} {lastName}
+							</p>
 							<div className="mt-2 flex">
 								<p className="text-xl">@jsiu1248 </p>
 								<p className="text-xl"> · Joined 2015</p>
@@ -147,7 +161,7 @@ const Profile = () => {
 					</div>
 					<div className="flex items-center h-full">
 						<button
-							className={`${buttonStyle} ${
+							className={`rounded-full border-2 text-white text-l font-bold p-2 px-6 ${
 								selectedColor
 									? `border-${selectedColor}-500 hover:border-${selectedColor}-600`
 									: "border-white"
@@ -215,7 +229,7 @@ const Profile = () => {
 					</p>
 				</div>
 			</div>
-		</body>
+		</div>
 	);
 };
 
