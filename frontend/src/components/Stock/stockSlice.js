@@ -18,7 +18,6 @@ export const getStock = createAsyncThunk("stock/getStock", async stockId => {
 export const stockSlice = createSlice({
 	name: "stock",
 	initialState,
-	reducers: {},
 	extraReducers: builder => {
 		builder.addCase(getStock.pending, state => {
 			state.loading = true;

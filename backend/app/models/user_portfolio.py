@@ -35,8 +35,8 @@ class UserPortfolio(db.Model):
         'Transaction', backref='portfolio', lazy=True)
     portfolio_owner = db.relationship(
         'User', back_populates='owner_portfolio')
-    # portfolio_stock = db.relationship(
-    #     'Stock', secondary=PortfolioStocks, back_populates='stock_portfolio')
+    portfolio_stock = db.relationship(
+        'Stock', secondary=PortfolioStocks, back_populates='stock_portfolio')
 
     # ? Methods
 
@@ -46,5 +46,6 @@ class UserPortfolio(db.Model):
             'name': self.name,
             'ownerId': self.user_id,
             'marketValue': self.market_value,
-            'transactions': [transaction.to_dict() for transaction in self.transactions]
+            'transactions': [transaction.to_dict() for transaction in self.transactions],
+            'stocks': [stock.transaction_dict() for stock in self.portfolio_stock]
         }

@@ -53,5 +53,4 @@ class User(db.Model, UserMixin):
             'first_name': self.first_name,
             'last_name':  self.last_name,
             'portfolio': portfolio_dict,
-            'userTransactions': [transaction.to_dict() for transaction in self.owner_transactions]
         }

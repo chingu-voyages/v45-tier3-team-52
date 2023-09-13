@@ -1,7 +1,7 @@
 from flask.cli import AppGroup
 from .users_demo import seed_users, undo_users
 from .user_portfolio_demo import seed_portfolio, undo_portfolio
-from .transactions_demo import seed_transaction, undo_transaction
+from .transactions_demo import undo_transaction
 from .stocks_demo import seed_stocks, undo_stocks
 from .stock_transactions_demo import undo_stock_transactions
 from .portfolio_stocks_demo import undo_portfolio_stocks
@@ -18,8 +18,6 @@ def seed():
     if environment == 'production':
         db.session.execute(
             f"TRUNCATE table {SCHEMA}.portfolio_stocks RESTART IDENTITY CASCADE;")
-        db.session.execute(
-            f"TRUNCATE table {SCHEMA}.stock_transactions RESTART IDENTITY CASCADE;")
         db.session.execute(
             f"TRUNCATE table {SCHEMA}.transactions RESTART IDENTITY CASCADE;")
         db.session.execute(
@@ -41,7 +39,6 @@ def seed():
     seed_users()
     seed_stocks()
     seed_portfolio()
-    seed_transaction()
 
 
 # Creates the `flask seed undo` command

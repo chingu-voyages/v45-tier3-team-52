@@ -21,14 +21,14 @@ def validation_errors_to_error_messages(validation_errors):
 @auth_routes.route("/login", methods=['POST'])
 def login():
     form = LoginForm()
-    print("userdata ===> ", type(form.data['email']))
+    # print("userdata ===> ", type(form.data['email']))
     form['csrf_token'].data = request.cookies['csrf_token']
-    print("Request Form Data ===>", request.form)
-    print("Request Cookies ===>", request.cookies)
+    # print("Request Form Data ===>", request.form)
+    # print("Request Cookies ===>", request.cookies)
 
     if form.validate_on_submit():
         user = User.query.filter(User.email == form.data['email']).first()
-        print("queried user ===>", user)
+        # print("queried user ===>", user)
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

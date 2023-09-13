@@ -31,6 +31,3 @@ def portfolio_update(id):
 
             db.session.commit()
     return queried_portfolio.to_dict()
-
-
-# queried_transaction.total = int(stock_count) * int(stock_price)
