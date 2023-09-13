@@ -48,8 +48,11 @@ class User(db.Model, UserMixin):
         portfolio_dict = None
         if self.owner_portfolio:
             portfolio_dict = self.owner_portfolio[0].to_dict()
+
         return {
             'id': self.id,
+            'email': self.email,
+            'wallet': self.wallet,
             'first_name': self.first_name,
             'last_name':  self.last_name,
             'portfolio': portfolio_dict,

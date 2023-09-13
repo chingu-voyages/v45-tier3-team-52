@@ -23,10 +23,12 @@ def transaction(id):
 def transaction_creation():
     req_data = request.json
 
-    portfolio_num = current_user.to_dict()['portfolio']['id']
+    queried_portfolio = UserPortfolio.query.get_or_404(
+        current_user.portfolio.id)
+
     new_transaction = Transaction(
         user_id=current_user.id,
-        portfolio_id=portfolio_num
+        portfolio_id=queried_portfolio.id
     )
 
     db.session.add(new_transaction)
@@ -43,7 +45,6 @@ def transaction_creation():
 
             queried_transaction.total = float(
                 req_data['stock']['quantity']) * float(queried_stock.current_price)
-            queried_transaction.status = 'completed'
             queried_transaction.quantity = req_data['stock']['quantity']
 
             queried_portfolio = UserPortfolio.query.get_or_404(
@@ -53,26 +54,16 @@ def transaction_creation():
                 pass
             else:
                 queried_portfolio.portfolio_stock.append(queried_stock)
-            db.session.commit()
+                if key == 'type' and val == 'Buy':
+                    print('key====>', key, val)
+                    queried_portfolio.market_value = queried_portfolio.market_value + \
+                        queried_transaction.total
+                if key == 'type' and val == 'Sell':
+                    queried_portfolio.market_value = queried_portfolio.market_value - \
+                        queried_transaction.total
         if key == 'stock' and val == None:
             return {"message": "you need to provide a stock"}
+        if key == 'type' and val != None:
+            queried_transaction.classification = req_data['type']
+        db.session.commit()
     return queried_transaction.to_dict()
-
-
-# # Assuming you have already queried the stock and portfolio as shown in your question
-
-# # Check if the queried_stock is already in the portfolio's portfolio_stock list
-# if queried_stock in queried_portfolio.portfolio_stock:
-#     # The stock is already in the portfolio
-#     # You can handle this case here
-#     pass
-# else:
-#     # The stock is not in the portfolio, so you can add it
-#     queried_portfolio.portfolio_stock.append(queried_stock)
-
-#     # Now you can perform the rest of your operations
-#     queried_transaction.total = float(req_data['stock']['quantity']) * float(queried_stock.current_price)
-#     queried_transaction.status = 'completed'
-#     queried_transaction.quantity = req_data['stock']['quantity']
-
-#     db.session.commit()

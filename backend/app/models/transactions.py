@@ -12,7 +12,8 @@ class Transaction(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    status = db.Column(db.String(255), nullable=False, default="In-progress")
+    classification = db.Column(
+        db.String(4))
     quantity = db.Column(db.Integer, default=0)
     total = db.Column(db.Float, default=0.00)
     portfolio_id = db.Column(db.Integer, db.ForeignKey(
@@ -38,7 +39,7 @@ class Transaction(db.Model):
             'id': self.id,
             'userId': self.user_id,
             'portfolioId': self.portfolio_id,
-            'status': self.status,
+            'type': self.classification,
             'quantity': self.quantity,
             'total': self.total,
             'stock': stock_dict,

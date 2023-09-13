@@ -7,7 +7,18 @@ portfolio_routes = Blueprint("portfolio", __name__)
 auth_error = "User not authorized to complete this action"
 
 
+#### * Get Portfolio ############
+@portfolio_routes.route('/<int:id>')
+@login_required
+def portfolio(id):
+    queried_portfolio = UserPortfolio.query.get_or_404(id)
+    if queried_portfolio.to_dict()['ownerId'] != current_user.id:
+        return {"error": auth_error}, 403
+
+    return queried_portfolio.to_dict()
+
 #### * update Portfolio ##############
+
 
 @portfolio_routes.route('/<int:id>', methods=['PUT'])
 @login_required
