@@ -19,16 +19,17 @@ def transaction(id):
 ##### * Create Transaction ###############
 
 @transaction_routes.route('/new', methods=['POST'])
-# @login_required
+@login_required
 def transaction_creation():
     req_data = request.json
 
-    queried_portfolio = UserPortfolio.query.get_or_404(
-        current_user.portfolio.id)
+    # queried_portfolio = UserPortfolio.query.filter(UserPortfolio
+    #     current_user.portfolio.id)
 
     new_transaction = Transaction(
         user_id=current_user.id,
-        portfolio_id=queried_portfolio.id
+        portfolio_id=queried_portfolio.id,
+        classification=req_data['type']
     )
 
     db.session.add(new_transaction)
@@ -63,7 +64,5 @@ def transaction_creation():
                         queried_transaction.total
         if key == 'stock' and val == None:
             return {"message": "you need to provide a stock"}
-        if key == 'type' and val != None:
-            queried_transaction.classification = req_data['type']
         db.session.commit()
     return queried_transaction.to_dict()

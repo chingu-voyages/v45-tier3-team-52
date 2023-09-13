@@ -37,8 +37,6 @@ def portfolio_update(id):
                 queried_stock = Stock.query.get_or_404(req_data['stock']['id'])
                 queried_portfolio.portfolio_stock.append(
                     queried_stock)
-                stock_count = req_data['stock']['quantity']
-                stock_price = queried_stock.current_price
 
             db.session.commit()
     return queried_portfolio.to_dict()

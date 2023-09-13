@@ -1,7 +1,6 @@
 from flask import Blueprint, request
-from flask_login import login_user, logout_user
+from flask_login import login_user, logout_user, current_user
 from app.models import User, db, UserPortfolio
-from app.forms import LoginForm, SignUpForm
 
 
 auth_routes = Blueprint("auth", __name__)
@@ -20,30 +19,29 @@ def validation_errors_to_error_messages(validation_errors):
 
 @auth_routes.route("/login", methods=['POST'])
 def login():
-    form = LoginForm()
-    # print("userdata ===> ", type(form.data['email']))
-    form['csrf_token'].data = request.cookies['csrf_token']
-    # print("Request Form Data ===>", request.form)
-    # print("Request Cookies ===>", request.cookies)
+    req_data = request.json
+    user = User.query.filter(User.email == req_data['email']).first()
+    if not user:
+        return {'errors': "user can not be found"}, 401
+    if not user.check_password(req_data['password']):
+        raise {'errors': 'Password was incorrect.'}
+    login_user(user)
 
-    if form.validate_on_submit():
-        user = User.query.filter(User.email == form.data['email']).first()
-        # print("queried user ===>", user)
-        login_user(user)
-        return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return user.to_dict()
 
 
 @auth_routes.route("/register", methods=['POST'])
 def register():
-    form = SignUpForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    if form.validate_on_submit():
+    req_data = request.json
+    user = User.query.filter(User.email == req_data['email']).first()
+    if user:
+        return {'errors': "user exists"}, 401
+    if not user:
         new_user = User(
-            first_name=form.data['first_name'],
-            last_name=form.data['last_name'],
-            email=form.data['email'],
-            password=form.data['password'],
+            first_name=req_data['first_name'],
+            last_name=req_data['last_name'],
+            email=req_data['email'],
+            password=req_data['password'],
         )
         db.session.add(new_user)
         db.session.commit()
@@ -55,7 +53,7 @@ def register():
         login_user(new_user)
         return new_user.to_dict()
     else:
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+        return {'error': 'Registration failed'}, 401
 
 
 @auth_routes.route("/logout")
