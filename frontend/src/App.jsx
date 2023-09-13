@@ -1,12 +1,8 @@
 import Splash from "./components/Splash/splash";
 import AuthForm from "./components/Auth/auth_form";
-import Login from "./components/testing/Login";
-// import RegisterFormContainer from "./components/Auth/register_form_container";
+import RegisterFormContainer from "./components/Auth/register_form_container";
 import StockChartContainer from "./components/Stock/stockChart_container";
 import { Routes, Route } from "react-router-dom";
-import StockComponent from "./components/testing/StockComponent";
-import TransactionComponent from "./components/testing/TransactionComponent";
-import CreateTransactionForm from "./components/testing/CreateTransactionForm";
 
 function App() {
 	return (
@@ -20,18 +16,18 @@ function App() {
 				<Route
 					exact
 					path="/login"
-					Component={Login}
+					Component={AuthForm}
 				/>
-				{/* <Route
+				<Route
 					exact
 					path="/register"
 					Component={RegisterFormContainer}
-				/> */}
-				<Route
+				/>
+				{/* <Route
 					exact
 					path="/transaction/new"
 					Component={CreateTransactionForm}
-				/>
+				/> */}
 				{/* <Route
 					exact
 					path="/stock"

@@ -1,6 +1,8 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 // import robinhood from "../../assets/robinhoodBG.jpeg";
+import { loginUser } from "../Slices/authSlice";
 
 const textInputStyle = "text-xs";
 const inputStyle =
@@ -15,6 +17,23 @@ const AuthForm = props => {
 	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
+
+	const dispatch = useDispatch();
+	const demoLogin = async () => {
+		const demoCredentials = {
+			email: "cantuk0@harvard.edu",
+			password: "zF8*wiaMl",
+		};
+		await dispatch(loginUser(demoCredentials));
+	};
+
+	const handleLogin = async () => {
+		const userCredentials = {
+			email,
+			password,
+		};
+		await dispatch(loginUser(userCredentials));
+	};
 
 	const registerName = (
 		<div className="flex flex-col gap-5 md:flex-row lg:flex-col">
@@ -109,7 +128,9 @@ const AuthForm = props => {
 						/>
 					</div>
 				</form>
-				<button className="my-5 border-solid border-black-500 border w-full h-10 rounded-full bg-black text-white hover:cursor-pointer hover:bg-gray-300 hover:border-gray-300">
+				<button
+					className="my-5 border-solid border-black-500 border w-full h-10 rounded-full bg-black text-white hover:cursor-pointer hover:bg-gray-300 hover:border-gray-300"
+					onClick={handleLogin}>
 					<div className="text-xs">
 						{formType === "Register" ? "Register" : "Log in"}
 					</div>
