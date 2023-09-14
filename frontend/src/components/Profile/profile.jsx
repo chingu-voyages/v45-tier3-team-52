@@ -1,16 +1,22 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../Slices/userSlice";
 
 const textInputStyle = "text-s font-bold";
 const inputStyle =
 	"border-solid border-gray-300 border w-full mt-2 py-1 px-2 rounded text-black";
 
 const Profile = () => {
+	const currentUser = useSelector(state => state.session.userInfo);
+	const dispatch = useDispatch();
+
 	const [modal, setModal] = useState(false);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [selectedColor, setSelectedColor] = useState(null);
+
 	const [investingValue, setInvestingValue] = useState("");
 	const [holdings, setHoldings] = useState("");
 	const [cash, setCash] = useState("");
@@ -19,6 +25,18 @@ const Profile = () => {
 
 	const handleColorClick = color => {
 		setSelectedColor(color);
+	};
+
+	const handleUserUpdate = () => {
+		const userData = {
+			first_name: firstName,
+			last_name: lastName,
+			id: currentUser.id,
+			email: email,
+			password: password,
+		};
+
+		dispatch(updateUser(userData));
 	};
 
 	return (
