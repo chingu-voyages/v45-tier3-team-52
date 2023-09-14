@@ -1,6 +1,6 @@
 from flask import request, Blueprint
 from flask_login import login_required, current_user
-from app.models import Transaction, Stock, db, User, StockTransactions
+from app.models import Transaction, Stock, db, UserPortfolio
 
 transaction_routes = Blueprint("transaction", __name__)
 auth_error = "User not authorized to complete this action"
@@ -9,7 +9,7 @@ auth_error = "User not authorized to complete this action"
 
 
 @transaction_routes.route('/<int:id>')
-# @login_required
+@login_required
 def transaction(id):
     queried_transaction = Transaction.query.get_or_404(id)
 
@@ -19,14 +19,16 @@ def transaction(id):
 ##### * Create Transaction ###############
 
 @transaction_routes.route('/new', methods=['POST'])
-# @login_required
+@login_required
 def transaction_creation():
     req_data = request.json
+    queried_portfolio = UserPortfolio.query.filter(
+        UserPortfolio.user_id == current_user.id).first()
 
     new_transaction = Transaction(
-        user_id=req_data['userId'],
-        # user_id=current_user.id,
-        status='In-Progress',
+        user_id=current_user.id,
+        portfolio_id=queried_portfolio.id,
+        classification=req_data['type']
     )
 
     db.session.add(new_transaction)
@@ -37,13 +39,28 @@ def transaction_creation():
     for key, val in req_data.items():
         if key == 'stock' and val != None:
             queried_stock = Stock.query.get_or_404(req_data['stock']['id'])
+            queried_stock.quantity_stock = req_data['stock']['quantity']
             queried_transaction.transactions_stock.append(
                 queried_stock)
-            stock_count = req_data['stock']['quantity']
-            stock_price = queried_stock.current_price
-            queried_transaction.total = int(stock_count) * int(stock_price)
-            queried_transaction.status = 'completed'
-            db.session.commit()
+
+            queried_transaction.total = float(
+                req_data['stock']['quantity']) * float(queried_stock.current_price)
+            queried_transaction.quantity = req_data['stock']['quantity']
+        db.session.commit()
+        # if key == 'type' and val == 'Buy':
+        #     if queried_stock in queried_portfolio.portfolio_stock:
+        #         if key == 'type' and val == 'Buy':
+        #             print('stocks in portfolio ===================>',
+        #                   queried_stock)
+        #     # else:
+        #     queried_portfolio.portfolio_stock.append(queried_stock)
+        #     if key == 'type' and val == 'Buy':
+        #         queried_portfolio.market_value = queried_portfolio.market_value + \
+        #             queried_transaction.total
+        #     if key == 'type' and val == 'Sell':
+        #         queried_portfolio.market_value = queried_portfolio.market_value - \
+        #             queried_transaction.total
         if key == 'stock' and val == None:
             return {"message": "you need to provide a stock"}
+        # db.session.commit()
     return queried_transaction.to_dict()

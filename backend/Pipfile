@@ -19,6 +19,7 @@ python-dateutil = "*"
 autopep8 = "*"
 flask-wtf = "*"
 yfinance = "*"
+itsdangerous = "*"
 
 [dev-packages]
 autopep8 = "*"

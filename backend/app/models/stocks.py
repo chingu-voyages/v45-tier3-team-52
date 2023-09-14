@@ -12,7 +12,8 @@ class Stock(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     org_name = db.Column(db.String(255), nullable=False)
     symbol = db.Column(db.String(255), nullable=False, unique=True)
-    current_price = db.Column(db.Integer)
+    current_price = db.Column(db.Float)
+    quantity_stock = db.Column(db.Integer, default=0)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -37,4 +38,13 @@ class Stock(db.Model):
             'current_price': self.current_price,
             'createdAt': self.created_at,
             'updatedAt': self.updated_at,
+        }
+
+    def transaction_dict(self):
+        return {
+            'id': self.id,
+            'org_name': self.org_name,
+            'symbol': self.symbol,
+            'current_price': self.current_price,
+            'quantity': self.quantity_stock
         }

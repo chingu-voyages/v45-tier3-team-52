@@ -12,8 +12,12 @@ class Transaction(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    status = db.Column(db.String(255), nullable=False, default="In-progress")
-    total = db.Column(db.Integer, default=0)
+    classification = db.Column(
+        db.String(4))
+    quantity = db.Column(db.Integer, default=0)
+    total = db.Column(db.Float, default=0.00)
+    portfolio_id = db.Column(db.Integer, db.ForeignKey(
+        'user_portfolios.id'), nullable=False)
     created_at = db.Column(db.DateTime(
         timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -28,10 +32,15 @@ class Transaction(db.Model):
 
     # ? Methods
     def to_dict(self):
+        stock_dict = None
+        if self.transactions_stock:
+            stock_dict = self.transactions_stock[0].transaction_dict()
         return {
             'id': self.id,
             'userId': self.user_id,
-            'status': self.status,
-            'stocks': [stock.to_dict() for stock in self.transactions_stock],
+            'portfolioId': self.portfolio_id,
+            'type': self.classification,
+            'quantity': self.quantity,
             'total': self.total,
+            'stock': stock_dict,
         }

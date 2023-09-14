@@ -20,3 +20,4 @@ wtforms
 autopep8
 gunicorn
 yfinance
+itsdangerous

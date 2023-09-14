@@ -26,9 +26,6 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# Application Security
-CORS(app)
-
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
@@ -47,7 +44,7 @@ CORS(app)
 
 @app.before_request
 def https_redirect():
-    if os.environ.get('FLASK_ENV') == 'production':
+    if os.environ.get('FLASK_ENV') == 'development':
         if request.headers.get('X-Forwarded-Proto') == 'http':
             url = request.url.replace('http://', 'https://', 1)
             code = 301

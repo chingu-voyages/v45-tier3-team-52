@@ -17,4 +17,4 @@ const mapDispatchToProps = dispatch => ({
 	// clearErrors: () => dispatch(clearErrors()),
 });
 
-// export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
+export default connect(mapStateToProps, mapDispatchToProps)(AuthForm);
