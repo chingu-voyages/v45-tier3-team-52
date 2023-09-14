@@ -22,9 +22,8 @@ def transaction(id):
 @login_required
 def transaction_creation():
     req_data = request.json
-
-    # queried_portfolio = UserPortfolio.query.filter(UserPortfolio
-    #     current_user.portfolio.id)
+    queried_portfolio = UserPortfolio.query.filter(
+        UserPortfolio.user_id == current_user.id).first()
 
     new_transaction = Transaction(
         user_id=current_user.id,
@@ -47,22 +46,21 @@ def transaction_creation():
             queried_transaction.total = float(
                 req_data['stock']['quantity']) * float(queried_stock.current_price)
             queried_transaction.quantity = req_data['stock']['quantity']
-
-            queried_portfolio = UserPortfolio.query.get_or_404(
-                new_transaction.portfolio_id)
-
-            if queried_stock in queried_portfolio.portfolio_stock:
-                pass
-            else:
-                queried_portfolio.portfolio_stock.append(queried_stock)
-                if key == 'type' and val == 'Buy':
-                    print('key====>', key, val)
-                    queried_portfolio.market_value = queried_portfolio.market_value + \
-                        queried_transaction.total
-                if key == 'type' and val == 'Sell':
-                    queried_portfolio.market_value = queried_portfolio.market_value - \
-                        queried_transaction.total
+        db.session.commit()
+        # if key == 'type' and val == 'Buy':
+        #     if queried_stock in queried_portfolio.portfolio_stock:
+        #         if key == 'type' and val == 'Buy':
+        #             print('stocks in portfolio ===================>',
+        #                   queried_stock)
+        #     # else:
+        #     queried_portfolio.portfolio_stock.append(queried_stock)
+        #     if key == 'type' and val == 'Buy':
+        #         queried_portfolio.market_value = queried_portfolio.market_value + \
+        #             queried_transaction.total
+        #     if key == 'type' and val == 'Sell':
+        #         queried_portfolio.market_value = queried_portfolio.market_value - \
+        #             queried_transaction.total
         if key == 'stock' and val == None:
             return {"message": "you need to provide a stock"}
-        db.session.commit()
+        # db.session.commit()
     return queried_transaction.to_dict()

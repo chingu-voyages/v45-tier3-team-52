@@ -19,14 +19,6 @@ const AuthForm = props => {
 	const [lastName, setLastName] = useState("");
 
 	const dispatch = useDispatch();
-	const demoLogin = async () => {
-		const demoCredentials = {
-			email: "cantuk0@harvard.edu",
-			password: "zF8*wiaMl",
-		};
-		await dispatch(loginUser(demoCredentials));
-	};
-
 	const handleLogin = async () => {
 		const userCredentials = {
 			email,
