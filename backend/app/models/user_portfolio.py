@@ -40,6 +40,7 @@ class UserPortfolio(db.Model):
 
     # ? Methods
 
+#
     def to_dict(self):
         return {
             'id': self.id,
@@ -47,5 +48,5 @@ class UserPortfolio(db.Model):
             'ownerId': self.user_id,
             'marketValue': self.market_value,
             'transactions': [transaction.to_dict() for transaction in self.transactions],
-            'stocks': [stock.transaction_dict() for stock in self.portfolio_stock]
+            'stocks': {stock.id: stock.transaction_dict() for stock in self.portfolio_stock}
         }

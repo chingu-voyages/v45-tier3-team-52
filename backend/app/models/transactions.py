@@ -14,7 +14,6 @@ class Transaction(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
     classification = db.Column(
         db.String(4))
-    quantity = db.Column(db.Integer, default=0)
     total = db.Column(db.Float, default=0.00)
     portfolio_id = db.Column(db.Integer, db.ForeignKey(
         'user_portfolios.id'), nullable=False)
@@ -40,7 +39,6 @@ class Transaction(db.Model):
             'userId': self.user_id,
             'portfolioId': self.portfolio_id,
             'type': self.classification,
-            'quantity': self.quantity,
             'total': self.total,
             'stock': stock_dict,
         }
