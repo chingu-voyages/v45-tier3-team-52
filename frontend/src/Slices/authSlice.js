@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { authBaseURL } from "../../util/baseUrl_api";
+import { authBaseURL } from "../util/baseUrl_api";
 
 const initialState = {
 	loading: false,
