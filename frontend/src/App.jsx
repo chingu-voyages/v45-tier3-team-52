@@ -3,6 +3,10 @@ import AuthForm from "./components/Auth/auth_form";
 import Login from "./components/testing/Login";
 // import RegisterFormContainer from "./components/Auth/register_form_container";
 import StockChartContainer from "./components/Stock/stockChart_container";
+import SplashContainer from "./components/Splash/splash_container";
+import LoginFormContainer from "./components/Auth/login_form_container";
+import RegisterFormContainer from "./components/Auth/register_form_container";
+import ProfileContainer from "./components/Profile/profile_container";
 import { Routes, Route } from "react-router-dom";
 import StockComponent from "./components/testing/StockComponent";
 import TransactionComponent from "./components/testing/TransactionComponent";
@@ -16,6 +20,17 @@ function App() {
 					exact
 					path="/home"
 					Component={StockChartContainer}
+				/>
+				<Route
+					exact
+					path="/profile"
+					Component={ProfileContainer}
+				/>
+
+				<Route
+					exact
+					path="/login"
+					Component={LoginFormContainer}
 				/>
 				<Route
 					exact
