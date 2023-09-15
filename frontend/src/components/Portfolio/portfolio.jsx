@@ -34,7 +34,7 @@ const SortableTable = () => {
 		},
 	]);
 
-	const chartRef = useRef(null); // Create a ref to hold the chart instance
+	const chartRef = useRef(null);
 
 	const [highlightedIndex, setHighlightedIndex] = useState(null);
 
@@ -84,13 +84,11 @@ const SortableTable = () => {
 			},
 		};
 
-		// Set CSS variables for colors
 		const chartContainerStyles = {
 			"--highlight-color": "rgb(0, 200, 5)",
 			"--other-color": "rgb(220, 255, 220)", // Whitish color
 		};
 
-		// Apply the CSS variables to the container
 		const chartContainer = document.querySelector(".chart-container");
 		Object.assign(chartContainer.style, chartContainerStyles);
 
@@ -122,7 +120,7 @@ const SortableTable = () => {
 				chartRef.current.destroy();
 			}
 		};
-	}, []); // Empty dependency array means this effect runs once after the component is mounted
+	}, []);
 
 	// Sorting function
 	const [sortOrder, setSortOrder] = useState(
@@ -226,7 +224,7 @@ const SortableTable = () => {
 									setHighlightedIndex(null);
 									updateDonutColors(null);
 								}}>
-								<td>{item.name}</td>
+								<td className="font-bold py-8">{item.name}</td>
 								<td>{item.symbol}</td>
 								<td>{item.shares}</td>
 								<td>{item.price}</td>
