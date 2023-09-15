@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateUser } from "../Slices/userSlice";
+import { current } from "@reduxjs/toolkit";
 
 const textInputStyle = "text-s font-bold";
 const inputStyle =
@@ -26,6 +27,12 @@ const Profile = () => {
 	const handleColorClick = color => {
 		setSelectedColor(color);
 	};
+
+	useEffect(() => {
+		setFirstName(currentUser?.first_name);
+		setLastName(currentUser?.last_name);
+		setEmail(currentUser?.email);
+	}, [currentUser]);
 
 	const handleUserUpdate = () => {
 		const userData = {
@@ -158,7 +165,10 @@ const Profile = () => {
 										? `bg-${selectedColor}-500 border-${selectedColor}-500 hover:bg-${selectedColor}-600 hover:border-${selectedColor}-600`
 										: "bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600"
 								}`}
-								onClick={() => setModal(true)}>
+								onClick={() => {
+									handleUserUpdate();
+									setModal(true);
+								}}>
 								Save Changes
 							</button>
 						</div>
@@ -181,7 +191,7 @@ const Profile = () => {
 							</p>
 							<div className="mt-2 flex">
 								<p className="text-xl">{email} </p>
-								<p className="text-xl"> · Joined {joinDate}</p>
+								<p className="text-xl"> Joined {joinDate}</p>
 							</div>
 						</div>
 					</div>
