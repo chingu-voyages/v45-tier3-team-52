@@ -38,6 +38,13 @@ const SortableTable = () => {
 	const [highlightedIndex, setHighlightedIndex] = useState(null);
 
 	useEffect(() => {
+		// Define the initial colors
+		const initialColors = [
+			"var(--highlight-color)",
+			"var(--other-color)",
+			"var(--other-color)",
+		];
+
 		// Define the chart configuration outside the effect
 		const config = {
 			type: "doughnut",
@@ -46,12 +53,8 @@ const SortableTable = () => {
 				datasets: [
 					{
 						data: [],
-						backgroundColor: [
-							"rgb(0, 200, 5)",
-							"rgb(0, 200, 5)",
-							"rgb(0, 200, 5)",
-						],
-						borderColor: ["white", "white", "white"],
+						backgroundColor: tableData.map(() => "rgb(0, 200, 5)"), // Set all initial colors to green
+						borderColor: tableData.map(() => "white"),
 						borderWidth: 3,
 					},
 				],
@@ -71,14 +74,24 @@ const SortableTable = () => {
 						const hoveredElement = elements[0];
 						const index = hoveredElement.index;
 						setHighlightedIndex(index);
-						updateDonutText(index);
+						updateDonutColors(index);
 					} else {
 						setHighlightedIndex(null);
-						updateDonutText(null);
+						updateDonutColors(null);
 					}
 				},
 			},
 		};
+
+		// Set CSS variables for colors
+		const chartContainerStyles = {
+			"--highlight-color": "rgb(0, 200, 5)",
+			"--other-color": "rgb(220, 255, 220)", // Whitish color
+		};
+
+		// Apply the CSS variables to the container
+		const chartContainer = document.querySelector(".chart-container");
+		Object.assign(chartContainer.style, chartContainerStyles);
 
 		const ctx = document.getElementById("myDoughnutChart").getContext("2d");
 		const myChart = new Chart(ctx, config);
@@ -132,41 +145,19 @@ const SortableTable = () => {
 		setSortOrder(newSortOrder);
 	};
 
-	const updateDonutText = index => {
+	const updateDonutColors = index => {
 		if (chartRef.current) {
-			if (index !== null) {
-				const symbol = tableData[index].symbol;
-				const equity = tableData[index].equity.replace("$", "");
-				const equityValue = parseInt(equity);
-
-				// Calculate the new percentages based on the initial total equity
-				const percentages = tableData.map((item, i) => {
-					return i === index
-						? (equityValue / equityValue) * 100
-						: (parseInt(item.equity.replace("$", "").replace(",", "")) /
-								initialTotalEquity) *
-								100;
-				});
-
-				chartRef.current.data.labels = [symbol, "Equity"];
-				chartRef.current.data.datasets[0].data = percentages;
-				chartRef.current.update();
-			} else {
-				// Reset the chart when no row is highlighted
-				const initialPercentages = tableData.map(item => {
-					const equityValue = parseInt(
-						item.equity.replace("$", "").replace(",", "")
-					);
-					return (equityValue / initialTotalEquity) * 100;
-				});
-
-				chartRef.current.data.labels = ["Stock Symbol", "Equity"];
-				chartRef.current.data.datasets[0].data = initialPercentages;
-				chartRef.current.update();
-			}
+			const updatedColors = tableData.map((_, i) => {
+				return index === null
+					? "rgb(0, 200, 5)"
+					: i === index
+					? "rgb(0, 200, 5)"
+					: "rgb(220, 255, 220)";
+			});
+			chartRef.current.data.datasets[0].backgroundColor = updatedColors;
+			chartRef.current.update();
 		}
 	};
-
 	return (
 		<div className="container mx-auto mt-8 p-4 flex items-center">
 			{/* Table Container */}
@@ -227,11 +218,11 @@ const SortableTable = () => {
 								}`}
 								onMouseEnter={() => {
 									setHighlightedIndex(index);
-									updateDonutText(index);
+									updateDonutColors(index);
 								}}
 								onMouseLeave={() => {
 									setHighlightedIndex(null);
-									updateDonutText(null);
+									updateDonutColors(null);
 								}}>
 								<td>{item.name}</td>
 								<td>{item.symbol}</td>
@@ -247,19 +238,19 @@ const SortableTable = () => {
 			</div>
 
 			{/* Donut Chart Container */}
-			<div className="w-1/2 chart-container">
-				<div className="bg-white border border-gray-300 rounded-lg shadow p-4">
+			<div className="w-1/2 chart-container text-center flex flex-col justify-center items-center">
+				<div className="bg-white rounded-lg shadow p-4">
 					<canvas
 						id="myDoughnutChart"
-						width="200"
-						height="200"></canvas>
+						width="300"
+						height="300"></canvas>
 					<div className="center-text">
-						<div className="text-s font-semibold">
+						<div className="text-xl font-semibold">
 							{highlightedIndex !== null
 								? tableData[highlightedIndex].symbol
 								: "Stocks and Options"}
 						</div>
-						<div className="text-sm">
+						<div className="text-xl font-semibold">
 							Equity: $
 							{highlightedIndex !== null
 								? tableData[highlightedIndex].equity
