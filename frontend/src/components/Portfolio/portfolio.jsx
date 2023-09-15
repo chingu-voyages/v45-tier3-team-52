@@ -173,45 +173,45 @@ const SortableTable = () => {
 			<div className="w-1/2 table-container">
 				<table className="table">
 					<thead>
-						<tr>
+						<tr className="border-b">
 							<th
-								className="cursor-pointer border-gray-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
 								onClick={() => sortTable(0)}>
 								Name{" "}
 								<span className="sort-icon">{sortOrder[0] ? "↓" : "↑"}</span>
 							</th>
 							<th
-								className="cursor-pointer border-gray-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
 								onClick={() => sortTable(1)}>
 								Symbol{" "}
 								<span className="sort-icon">{sortOrder[1] ? "↓" : "↑"}</span>
 							</th>
 							<th
-								className="cursor-pointer border-gray-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
 								onClick={() => sortTable(2)}>
 								Shares{" "}
 								<span className="sort-icon">{sortOrder[2] ? "↓" : "↑"}</span>
 							</th>
 							<th
-								className="cursor-pointer border-gray-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
 								onClick={() => sortTable(3)}>
 								Price{" "}
 								<span className="sort-icon">{sortOrder[3] ? "↓" : "↑"}</span>
 							</th>
 							<th
-								className="cursor-pointer border-gray-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
 								onClick={() => sortTable(4)}>
 								Average cost{" "}
 								<span className="sort-icon">{sortOrder[4] ? "↓" : "↑"}</span>
 							</th>
 							<th
-								className="cursor-pointer border-gray-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
 								onClick={() => sortTable(5)}>
 								Total return{" "}
 								<span className="sort-icon">{sortOrder[5] ? "↓" : "↑"}</span>
 							</th>
 							<th
-								className="cursor-pointer border-gray-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
 								onClick={() => sortTable(6)}>
 								Equity{" "}
 								<span className="sort-icon">{sortOrder[6] ? "↓" : "↑"}</span>
