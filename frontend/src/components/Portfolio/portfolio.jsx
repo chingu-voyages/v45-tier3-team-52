@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
+import "font-awesome/css/font-awesome.min.css";
 
 const SortableTable = () => {
 	// Sample data for the table
@@ -158,6 +159,7 @@ const SortableTable = () => {
 			chartRef.current.update();
 		}
 	};
+
 	return (
 		<div className="container mx-auto mt-8 p-4 flex items-center">
 			{/* Table Container */}
@@ -229,7 +231,14 @@ const SortableTable = () => {
 								<td>{item.shares}</td>
 								<td>{item.price}</td>
 								<td>{item.averageCost}</td>
-								<td>{item.return}</td>
+								<td>
+									{item.return}
+									{item.return.includes("-") ? (
+										<i className="fas fa-caret-down text-red-500 pl-1"></i>
+									) : (
+										<i className="fas fa-caret-up text-green-500 pl-1"></i>
+									)}
+								</td>
 								<td>{item.equity}</td>
 							</tr>
 						))}
@@ -250,7 +259,7 @@ const SortableTable = () => {
 								? tableData[highlightedIndex].symbol
 								: "Stocks and Options"}
 						</div>
-						<div className="text-xl font-semibold">
+						<div className="text-xl ">
 							Equity: $
 							{highlightedIndex !== null
 								? tableData[highlightedIndex].equity
