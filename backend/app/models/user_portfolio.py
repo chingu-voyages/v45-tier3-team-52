@@ -50,3 +50,9 @@ class UserPortfolio(db.Model):
             'transactions': [transaction.to_dict() for transaction in self.transactions],
             'stocks': {stock.id: stock.transaction_dict() for stock in self.portfolio_stock}
         }
+
+    def find_stock(self, stock_id):
+        stocks = {stock.id: stock.transaction_dict()
+                  for stock in self.portfolio_stock}
+        if stock_id in stocks:
+            return stocks[stock_id]

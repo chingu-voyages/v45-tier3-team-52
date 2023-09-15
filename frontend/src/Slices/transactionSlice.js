@@ -25,7 +25,18 @@ export const createTransaction = createAsyncThunk(
 			transactionDetail
 		);
 		const response = await request.data;
-		console.log(response);
+		return response;
+	}
+);
+
+export const updateTransaction = createAsyncThunk(
+	"transaction/updateTransactionTransaction",
+	async transactionDetail => {
+		const request = await axios.put(
+			`${transactionBaseURL}/new`,
+			transactionDetail
+		);
+		const response = await request.data;
 		return response;
 	}
 );
