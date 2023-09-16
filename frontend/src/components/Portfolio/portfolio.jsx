@@ -160,6 +160,40 @@ const SortableTable = () => {
 
 	return (
 		<div>
+			<div className="container mx-auto items-center">
+				<p className="">Total Portfolio Value</p>
+				<p className="text-3xl font-medium ">$PortfolioValue</p>
+			</div>
+			<div className="container mx-auto flex items-center">
+				<div className="w-1/2 table-container py-8">
+					<table className="w-full">
+						<tbody>
+							<tr className="border-b border-t">
+								<td className="w-1/2 py-8">
+									<div className="font-semibold">Stocks and Options</div>
+								</td>
+								<td className="w-1/2">
+									<div className="flex justify-end">
+										<div className="text-gray-500 mr-4">25%</div>
+										<div>$2,500</div>
+									</div>
+								</td>
+							</tr>
+							<tr className="border-b">
+								<td className="w-1/2 py-8">
+									<div className="font-semibold">Brokerage Cash</div>
+								</td>
+								<td className="w-1/2">
+									<div className="flex justify-end">
+										<div className="text-gray-500 mr-4">65%</div>
+										<div>$6,500</div>
+									</div>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
 			<div className="container mx-auto flex items-center">
 				<p className="text-xl font-semibold">Stocks</p>
 			</div>
