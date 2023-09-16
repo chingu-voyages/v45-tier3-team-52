@@ -50,7 +50,7 @@ function App() {
 				/>
 				<Route
 					exact
-					path="/buy"
+					path="/stocks/:ticker"
 					Component={BuySellForm}
 				/>
 			</Routes>

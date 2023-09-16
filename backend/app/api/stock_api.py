@@ -23,7 +23,6 @@ def ticker_list(stocks):
     newlist = []
     count = 0
     while count <= 50:
-    while count <= 100:
         newlist.append(
             {"ticker_name": stocks[count]["T"], "close_price": stocks[count]['c']})
         count += 1
