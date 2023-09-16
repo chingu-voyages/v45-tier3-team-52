@@ -4,15 +4,15 @@ from sqlalchemy import text
 
 def seed_users():
     users = [{
-        "first_name": "Cassey",
-        "last_name": "Antuk",
-        "email": "cantuk0@harvard.edu",
-        "password": "zF8*wiaMl"
+        "first_name": "Jane",
+        "last_name": "Doe",
+        "email": "jane.doe0@harvard.edu",
+        "password": "password1"
     }, {
-        "first_name": "Alli",
-        "last_name": "Voules",
-        "email": "avoules1@ebay.com",
-        "password": "cI9\\DfEsNZp"
+        "first_name": "John",
+        "last_name": "Willam",
+        "email": "will.john1@ebay.com",
+        "password": "password"
     }, {
         "first_name": "Melisandra",
         "last_name": "Kalderon",

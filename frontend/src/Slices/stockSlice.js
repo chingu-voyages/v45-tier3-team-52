@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { stockBaseURL } from "../../util/baseUrl_api";
+import { stockBaseURL } from "../util/baseUrl_api";
 
 const initialState = {
 	loading: false,
@@ -18,7 +18,6 @@ export const getStock = createAsyncThunk("stock/getStock", async stockId => {
 export const stockSlice = createSlice({
 	name: "stock",
 	initialState,
-	reducers: {},
 	extraReducers: builder => {
 		builder.addCase(getStock.pending, state => {
 			state.loading = true;

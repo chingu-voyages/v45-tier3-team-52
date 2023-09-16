@@ -8,11 +8,12 @@ from .models import User, db
 from .api.user_api import user_routes
 from .seeds import seed_commands
 from .config import Config
-from .api.stock_api import stock_route
+from .api.stock_api import stock_routes
 from .api.auth_api import auth_routes
 from .api.user_api import user_routes
 from .api.user_portfolio_api import portfolio_routes
 from .api.transactions_api import transaction_routes
+from .api.assets_api import asset_routes
 
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
 
@@ -26,14 +27,12 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# Application Security
-CORS(app)
-
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
-app.register_blueprint(stock_route, url_prefix='/api/stocks')
+app.register_blueprint(stock_routes, url_prefix='/api/stocks')
+app.register_blueprint(asset_routes, url_prefix='/api/assets')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(portfolio_routes, url_prefix='/api/portfolio')
 app.register_blueprint(transaction_routes, url_prefix='/api/transaction')
@@ -47,7 +46,7 @@ CORS(app)
 
 @app.before_request
 def https_redirect():
-    if os.environ.get('FLASK_ENV') == 'production':
+    if os.environ.get('FLASK_ENV') == 'development':
         if request.headers.get('X-Forwarded-Proto') == 'http':
             url = request.url.replace('http://', 'https://', 1)
             code = 301

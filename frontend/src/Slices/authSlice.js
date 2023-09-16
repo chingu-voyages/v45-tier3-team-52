@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { authBaseURL } from "../../util/baseUrl_api";
+import { authBaseURL } from "../util/baseUrl_api";
 
 const initialState = {
 	loading: false,
@@ -9,7 +9,7 @@ const initialState = {
 	error: "",
 };
 
-// Generates pending, fulfilled, and rejected action types
+// * Login User
 export const loginUser = createAsyncThunk(
 	"auth/loginUser",
 	async userCredentials => {
@@ -18,10 +18,27 @@ export const loginUser = createAsyncThunk(
 		return response;
 	}
 );
-
-export const logoutUser = createAsyncThunk("auth/logoutUser", () => {
-	axios.get(`${authBaseURL}/logout`).then(res => res.data);
+// * Logout User
+export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
+	axios.get(`${authBaseURL}/logout`);
 });
+
+// * Register User
+export const registerUser = createAsyncThunk("auth/registerUser", async () => {
+	const request = await axios.post(`${authBaseURL}/register`);
+	const response = await request.data;
+	return response;
+});
+
+// * Authenticate/ restore logged In user
+export const authenticateUser = createAsyncThunk(
+	"auth/authentication",
+	async () => {
+		const request = await axios.get(`${authBaseURL}/`);
+		const response = await request.data;
+		return response;
+	}
+);
 
 export const authSlice = createSlice({
 	name: "auth",
@@ -32,7 +49,9 @@ export const authSlice = createSlice({
 				action => {
 					return (
 						action.type === loginUser.pending.type ||
-						action.type === logoutUser.pending.type
+						action.type === logoutUser.pending.type ||
+						action.type === authenticateUser.pending.type ||
+						action.type === registerUser.pending.type
 					);
 				},
 				state => {
@@ -43,13 +62,15 @@ export const authSlice = createSlice({
 				action => {
 					return (
 						action.type === loginUser.fulfilled.type ||
-						action.type === logoutUser.fulfilled.type
+						action.type === logoutUser.fulfilled.type ||
+						action.type === authenticateUser.fulfilled.type ||
+						action.type === registerUser.fulfilled.type
 					);
 				},
 				(state, action) => {
 					state.loading = false;
 					state.userInfo =
-						action.type === loginUser.fulfilled.type ? action.payload : {};
+						action.type === logoutUser.fulfilled.type ? {} : action.payload;
 					state.error = "";
 				}
 			)
@@ -57,7 +78,9 @@ export const authSlice = createSlice({
 				action => {
 					return (
 						action.type === loginUser.rejected.type ||
-						action.type === logoutUser.rejected.type
+						action.type === logoutUser.rejected.type ||
+						action.type === authenticateUser.rejected.type ||
+						action.type === registerUser.rejected.type
 					);
 				},
 				(state, action) => {
