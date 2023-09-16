@@ -1,24 +1,46 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { updateUser } from "../Slices/userSlice";
+import { current } from "@reduxjs/toolkit";
 
 const textInputStyle = "text-s font-bold";
 const inputStyle =
 	"border-solid border-gray-300 border w-full mt-2 py-1 px-2 rounded text-black";
 
+const buttonColors = ["orange", "pink", "purple", "blue", "green"];
+
 const Profile = () => {
+	const currentUser = useSelector(state => state.session.userInfo);
+	const dispatch = useDispatch();
+
 	const [modal, setModal] = useState(false);
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [selectedColor, setSelectedColor] = useState(null);
+
 	const [investingValue, setInvestingValue] = useState("");
 	const [holdings, setHoldings] = useState("");
 	const [cash, setCash] = useState("");
 	const [accountValue, setAccountValue] = useState("");
 	const [joinDate, setJoinDate] = useState("");
 
-	const handleColorClick = color => {
-		setSelectedColor(color);
+	useEffect(() => {
+		setFirstName(currentUser?.first_name);
+		setLastName(currentUser?.last_name);
+		setEmail(currentUser?.email);
+	}, [currentUser]);
+
+	const handleUserUpdate = () => {
+		const userData = {
+			first_name: firstName,
+			last_name: lastName,
+			id: currentUser.id,
+			email: email,
+		};
+
+		dispatch(updateUser(userData));
 	};
 
 	return (
@@ -26,7 +48,7 @@ const Profile = () => {
 			{modal && (
 				<div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 overflow-y-auto">
 					<div className="bg-white p-4 rounded-lg w-4/12">
-						<section className="flex justify-between w-full">
+						<div className="flex justify-between w-full">
 							<div>
 								<p className="text-xl font-bold">Edit Profile</p>
 							</div>
@@ -37,7 +59,7 @@ const Profile = () => {
 									X
 								</button>
 							</div>
-						</section>
+						</div>
 						<div className="flex flex-col">
 							<div className="mb-10 text-center">
 								<div className="w-32 h-24 mx-auto">
@@ -104,31 +126,16 @@ const Profile = () => {
 							<div className="mt-10 ">
 								<p className="text-s font-bold text-left mb-2">Theme</p>
 								<div className="flex justify-center gap-2">
-									<button
-										className={`w-20 h-20 bg-orange-500 rounded-full focus:border-double border-4 border-white ${
-											selectedColor === "orange" ? "border-white" : ""
-										}`}
-										onClick={() => handleColorClick("orange")}></button>
-									<button
-										className={`w-20 h-20 bg-pink-500 rounded-full focus:border-double border-4 border-white ${
-											selectedColor === "pink" ? "border-white" : ""
-										}`}
-										onClick={() => handleColorClick("pink")}></button>
-									<button
-										className={`w-20 h-20 bg-purple-500 rounded-full focus:border-double border-4 border-white ${
-											selectedColor === "purple" ? "border-white" : ""
-										}`}
-										onClick={() => handleColorClick("purple")}></button>
-									<button
-										className={`w-20 h-20 bg-blue-500 rounded-full focus:border-double border-4 border-white ${
-											selectedColor === "blue" ? "border-white" : ""
-										}`}
-										onClick={() => handleColorClick("blue")}></button>
-									<button
-										className={`w-20 h-20 bg-green-500 rounded-full focus:border-double border-4 border-white ${
-											selectedColor === "green" ? "border-white" : ""
-										}`}
-										onClick={() => handleColorClick("green")}></button>
+									{buttonColors.map((buttonColor, idx) => {
+										return (
+											<button
+												className={`w-20 h-20 bg-${buttonColor}-500 rounded-full focus:border-double border-4 border-white ${
+													selectedColor === buttonColor ? "border-white" : ""
+												}`}
+												key={idx}
+												onClick={() => setSelectedColor(buttonColor)}></button>
+										);
+									})}
 								</div>
 							</div>
 						</div>
@@ -140,7 +147,10 @@ const Profile = () => {
 										? `bg-${selectedColor}-500 border-${selectedColor}-500 hover:bg-${selectedColor}-600 hover:border-${selectedColor}-600`
 										: "bg-blue-500 border-blue-500 hover:bg-blue-600 hover:border-blue-600"
 								}`}
-								onClick={() => setModal(true)}>
+								onClick={() => {
+									handleUserUpdate();
+									setModal(divue);
+								}}>
 								Save Changes
 							</button>
 						</div>
@@ -149,7 +159,7 @@ const Profile = () => {
 			)}
 			<div className="mt-5 ml-20">
 				{/* Personal Information */}
-				<section className="flex justify-between w-full">
+				<div className="flex justify-between w-full">
 					<div className="mb-10 flex items-center">
 						<div className="w-32 h-24 mx-auto">
 							<img
@@ -163,7 +173,7 @@ const Profile = () => {
 							</p>
 							<div className="mt-2 flex">
 								<p className="text-xl">{email} </p>
-								<p className="text-xl"> · Joined {joinDate}</p>
+								<p className="text-xl"> Joined {joinDate}</p>
 							</div>
 						</div>
 					</div>
@@ -178,11 +188,11 @@ const Profile = () => {
 									? `bg-${selectedColor}-500 hover:bg-${selectedColor}-600`
 									: "bg-blue-500 hover:bg-blue-600"
 							}`}
-							onClick={() => setModal(true)}>
+							onClick={() => setModal(divue)}>
 							Edit Profile
 						</button>
 					</div>
-				</section>
+				</div>
 
 				{/* Total Portfolio */}
 				<div className="mb-10">
@@ -194,36 +204,36 @@ const Profile = () => {
 				<div className="mb-10">
 					<p className="text-3xl mb-4">Investing</p>
 					<div className="border-b mb-2"></div>
-					<table className="w-full">
-						<tr>
-							<td className="p-2 font-medium text-xl">Total investing value</td>
-							<td className="p-2 font-bold text-xl text-right">
+					<div className="w-full">
+						<div>
+							<div className="font-medium text-xl">Total investing value</div>
+							<div className="font-bold text-xl text-right">
 								${investingValue}
-							</td>
-						</tr>
-						<tr>
-							<td className="p-2 text-gray-500">Brokerage holdings</td>
-							<td className="p-2 text-right">${holdings}</td>
-						</tr>
-						<tr>
-							<td className="p-2 text-gray-500">Brokerage cash</td>
-							<td className="p-2 text-right">${cash}</td>
-						</tr>
-					</table>
+							</div>
+						</div>
+						<div>
+							<div className="text-gray-500">Brokerage holdings</div>
+							<div className="text-right">${holdings}</div>
+						</div>
+						<div>
+							<div className="text-gray-500">Brokerage cash</div>
+							<div className="text-right">${cash}</div>
+						</div>
+					</div>
 				</div>
 
 				{/* Spending Information */}
 				<div className="mb-10">
 					<p className="text-3xl mb-4">Spending</p>
 					<div className="border-b mb-2"></div>
-					<table className="w-full">
-						<tr>
-							<td className="p-2 font-medium text-xl">Account value</td>
-							<td className="p-2 font-bold text-xl text-right">
+					<div className="w-full">
+						<div>
+							<div className="font-medium text-xl">Account value</div>
+							<div className="font-bold text-xl text-right">
 								${accountValue}
-							</td>
-						</tr>
-					</table>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				{/* Disclaimer */}
@@ -237,7 +247,7 @@ const Profile = () => {
 						are not offered by Robinhood's broker-dealer and are therefore not
 						subject to the same regulatory protections as those offered by
 						Robinhood Financial. Robinhood Money, LLC is a licensed money
-						transmitter (NMLS ID: 1990968). Robinhood Entity Disclosures.
+						divansmitter (NMLS ID: 1990968). Robinhood Entity Disclosures.
 					</p>
 				</div>
 			</div>
