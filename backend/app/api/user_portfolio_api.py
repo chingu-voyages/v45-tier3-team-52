@@ -8,10 +8,11 @@ auth_error = "User not authorized to complete this action"
 
 
 #### * Get Portfolio ############
-@portfolio_routes.route('/<int:id>')
+@portfolio_routes.route('/')
 @login_required
-def portfolio(id):
-    queried_portfolio = UserPortfolio.query.get_or_404(id)
+def portfolio():
+    queried_portfolio = UserPortfolio.filter(
+        UserPortfolio.user_id == current_user.id).first()
     if queried_portfolio.to_dict()['ownerId'] != current_user.id:
         return {"error": auth_error}, 403
 

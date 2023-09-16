@@ -16,6 +16,21 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
+############ * Authentication #######################################
+
+
+@auth_routes.route('/')
+def authentication():
+    """
+    Authenticates a user.
+    """
+    if current_user.is_authenticated:
+        return current_user.to_dict()
+    return {'errors': ['Unauthorized']}
+
+
+############ * Login #######################################
+
 
 @auth_routes.route("/login", methods=['POST'])
 def login():
@@ -28,6 +43,8 @@ def login():
     login_user(user)
 
     return user.to_dict()
+
+############ * Register #######################################
 
 
 @auth_routes.route("/register", methods=['POST'])
@@ -55,6 +72,8 @@ def register():
     else:
         return {'error': 'Registration failed'}, 401
 
+
+############ * Logout #######################################
 
 @auth_routes.route("/logout")
 def logout():

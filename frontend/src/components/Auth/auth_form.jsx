@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 // import robinhood from "../../assets/robinhoodBG.jpeg";
-import { loginUser } from "../Slices/authSlice";
+import { loginUser } from "../../Slices/authSlice";
 
 const textInputStyle = "text-xs";
 const inputStyle =

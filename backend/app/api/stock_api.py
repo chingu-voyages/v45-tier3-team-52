@@ -6,7 +6,7 @@ import json
 import yfinance as yf
 from sqlalchemy import func, or_
 
-stock_route = Blueprint("stocks",  __name__)
+stock_routes = Blueprint("stocks",  __name__)
 
 polygon_API = "https://api.polygon.io/v2/aggs/grouped/locale/us/market/stocks/2023-08-25?adjusted=true&sort=desc&apiKey={}".format(
     os.getenv('API_KEY'))
@@ -47,12 +47,12 @@ def convert_symbol_to_company(ticker_list):
     return stock_list
 
 
-@stock_route.route('/allstocks')
+@stock_routes.route('/allstocks')
 def list_of_stock():
     return api_data(polygon_API)
 
 
-@stock_route.route('/<value>', methods=['GET'])
+@stock_routes.route('/<value>', methods=['GET'])
 def get_stock(value):
     """
     Route allowing user to query stock by id, symbol, or orgname.
@@ -75,7 +75,7 @@ def get_stock(value):
     return stock.to_dict()
 
 
-@stock_route.route('/addstock', methods=["POST"])
+@stock_routes.route('/addstock', methods=["POST"])
 def add_stocks():
     db_stocks = []
     aggs = convert_symbol_to_company(ticker_list(api_data(polygon_API)))
