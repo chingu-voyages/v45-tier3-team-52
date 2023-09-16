@@ -23,7 +23,7 @@ class User(db.Model, UserMixin):
         db.DateTime,
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
-        nullable=False
+
     )
 
     # ! Relationships

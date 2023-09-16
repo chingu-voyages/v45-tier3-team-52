@@ -1,7 +1,7 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from sqlalchemy.sql import func
 from datetime import datetime
-from .portfolio_stock import PortfolioStocks
+from .portfolio_assets import PortfolioAssets
 
 
 class UserPortfolio(db.Model):
@@ -26,7 +26,7 @@ class UserPortfolio(db.Model):
         db.DateTime,
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
-        nullable=False
+
     )
 
     # ! Relationships
@@ -35,24 +35,28 @@ class UserPortfolio(db.Model):
         'Transaction', backref='portfolio', lazy=True)
     portfolio_owner = db.relationship(
         'User', back_populates='owner_portfolio')
-    portfolio_stock = db.relationship(
-        'Stock', secondary=PortfolioStocks, back_populates='stock_portfolio')
+    portfolio_asset = db.relationship(
+        'Asset', secondary=PortfolioAssets, back_populates='asset_portfolio')
 
     # ? Methods
-
-#
     def to_dict(self):
+        user_assets = [asset.to_dict() for asset in self.portfolio_asset]
+        asset_dict = {}
+
+        for asset in user_assets:
+            stock_id = asset['stock_id']
+            if stock_id in asset_dict:
+                asset_dict[stock_id]['quantity'] += asset['quantity']
+            else:
+                asset_dict[stock_id] = asset.copy()  # Use a copy of the asset
+
+        for stock_id, asset_info in asset_dict.items():
+            asset_info.pop('stock_id', None)
         return {
             'id': self.id,
             'name': self.name,
             'ownerId': self.user_id,
             'marketValue': self.market_value,
             'transactions': [transaction.to_dict() for transaction in self.transactions],
-            'stocks': {stock.id: stock.transaction_dict() for stock in self.portfolio_stock}
+            'assets': asset_dict
         }
-
-    def find_stock(self, stock_id):
-        stocks = {stock.id: stock.transaction_dict()
-                  for stock in self.portfolio_stock}
-        if stock_id in stocks:
-            return stocks[stock_id]

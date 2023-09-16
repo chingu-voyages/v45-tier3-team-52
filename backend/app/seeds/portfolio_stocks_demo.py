@@ -1,5 +1,5 @@
 from app import db
-from app.models import portfolio_stock, SCHEMA, environment
+from app.models import SCHEMA, environment
 from sqlalchemy.sql import text
 
 
@@ -10,8 +10,8 @@ def seed_portfolio_stocks():
 def undo_portfolio_stocks():
     if environment == "production":
         db.session.execute(
-            f"TRUNCATE table {SCHEMA}.portfolio_stocks RESTART IDENTITY CASCADE;")
+            f"TRUNCATE table {SCHEMA}.portfolio_assets RESTART IDENTITY CASCADE;")
     else:
-        db.session.execute(text("DELETE FROM portfolio_stocks"))
+        db.session.execute(text("DELETE FROM portfolio_assets"))
 
     db.session.commit()
