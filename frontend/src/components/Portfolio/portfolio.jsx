@@ -159,114 +159,120 @@ const SortableTable = () => {
 	};
 
 	return (
-		<div className="container mx-auto mt-8 p-4 flex items-center">
-			{/* Table Container */}
-			<div className="w-1/2 table-container">
-				<table className="table">
-					<thead>
-						<tr className="border-b">
-							<th
-								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
-								onClick={() => sortTable(0)}>
-								Name{" "}
-								<span className="sort-icon">{sortOrder[0] ? "↓" : "↑"}</span>
-							</th>
-							<th
-								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
-								onClick={() => sortTable(1)}>
-								Symbol{" "}
-								<span className="sort-icon">{sortOrder[1] ? "↓" : "↑"}</span>
-							</th>
-							<th
-								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
-								onClick={() => sortTable(2)}>
-								Shares{" "}
-								<span className="sort-icon">{sortOrder[2] ? "↓" : "↑"}</span>
-							</th>
-							<th
-								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
-								onClick={() => sortTable(3)}>
-								Price{" "}
-								<span className="sort-icon">{sortOrder[3] ? "↓" : "↑"}</span>
-							</th>
-							<th
-								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
-								onClick={() => sortTable(4)}>
-								Average cost{" "}
-								<span className="sort-icon">{sortOrder[4] ? "↓" : "↑"}</span>
-							</th>
-							<th
-								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
-								onClick={() => sortTable(5)}>
-								Total return{" "}
-								<span className="sort-icon">{sortOrder[5] ? "↓" : "↑"}</span>
-							</th>
-							<th
-								className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
-								onClick={() => sortTable(6)}>
-								Equity{" "}
-								<span className="sort-icon">{sortOrder[6] ? "↓" : "↑"}</span>
-							</th>
-						</tr>
-					</thead>
-					<tbody>
-						{tableData.map((item, index) => (
-							<tr
-								key={index}
-								className={`border-b border-gray-300 hover:bg-gray-100 ${
-									index === highlightedIndex ? "bg-gray-200" : ""
-								}`}
-								onMouseEnter={() => {
-									setHighlightedIndex(index);
-									updateDonutColors(index);
-								}}
-								onMouseLeave={() => {
-									setHighlightedIndex(null);
-									updateDonutColors(null);
-								}}>
-								<td className="font-bold py-8">{item.name}</td>
-								<td>{item.symbol}</td>
-								<td>{item.shares}</td>
-								<td>{item.price}</td>
-								<td>{item.averageCost}</td>
-								<td>
-									{item.return}
-									{item.return.includes("-") ? (
-										<i className="fas fa-caret-down text-red-500 pl-1"></i>
-									) : (
-										<i className="fas fa-caret-up text-green-500 pl-1"></i>
-									)}
-								</td>
-								<td>{item.equity}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
+		<div>
+			<div className="container mx-auto flex items-center">
+				<p className="text-xl font-semibold">Stocks</p>
 			</div>
 
-			{/* Donut Chart Container */}
-			<div className="w-1/2 chart-container text-center flex flex-col justify-center items-center">
-				<div className="bg-white rounded-lg shadow p-4">
-					<canvas
-						id="myDoughnutChart"
-						width="300"
-						height="300"></canvas>
-					<div className="center-text">
-						<div className="text-xl font-semibold">
-							{highlightedIndex !== null
-								? tableData[highlightedIndex].symbol
-								: "Stocks and Options"}
-						</div>
-						<div className="text-xl ">
-							Equity: $
-							{highlightedIndex !== null
-								? tableData[highlightedIndex].equity
-								: tableData.reduce((acc, item) => {
-										const equityValue = parseInt(
-											item.equity.replace("$", "").replace(",", "")
-										);
-										return acc + equityValue;
-								  }, 0)}
+			<div className="container mx-auto p-4 flex items-center">
+				{/* Table Container */}
+				<div className="w-1/2 table-container">
+					<table className="table">
+						<thead>
+							<tr className="border-b">
+								<th
+									className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+									onClick={() => sortTable(0)}>
+									Name{" "}
+									<span className="sort-icon">{sortOrder[0] ? "↓" : "↑"}</span>
+								</th>
+								<th
+									className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+									onClick={() => sortTable(1)}>
+									Symbol{" "}
+									<span className="sort-icon">{sortOrder[1] ? "↓" : "↑"}</span>
+								</th>
+								<th
+									className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+									onClick={() => sortTable(2)}>
+									Shares{" "}
+									<span className="sort-icon">{sortOrder[2] ? "↓" : "↑"}</span>
+								</th>
+								<th
+									className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+									onClick={() => sortTable(3)}>
+									Price{" "}
+									<span className="sort-icon">{sortOrder[3] ? "↓" : "↑"}</span>
+								</th>
+								<th
+									className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+									onClick={() => sortTable(4)}>
+									Average cost{" "}
+									<span className="sort-icon">{sortOrder[4] ? "↓" : "↑"}</span>
+								</th>
+								<th
+									className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+									onClick={() => sortTable(5)}>
+									Total return{" "}
+									<span className="sort-icon">{sortOrder[5] ? "↓" : "↑"}</span>
+								</th>
+								<th
+									className="cursor-pointer border-green-300 px-6 py-4 text-gray-500 hover:border-b hover:text-black"
+									onClick={() => sortTable(6)}>
+									Equity{" "}
+									<span className="sort-icon">{sortOrder[6] ? "↓" : "↑"}</span>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{tableData.map((item, index) => (
+								<tr
+									key={index}
+									className={`border-b border-gray-300 hover:bg-gray-100 ${
+										index === highlightedIndex ? "bg-gray-200" : ""
+									}`}
+									onMouseEnter={() => {
+										setHighlightedIndex(index);
+										updateDonutColors(index);
+									}}
+									onMouseLeave={() => {
+										setHighlightedIndex(null);
+										updateDonutColors(null);
+									}}>
+									<td className="font-bold py-8">{item.name}</td>
+									<td>{item.symbol}</td>
+									<td>{item.shares}</td>
+									<td>{item.price}</td>
+									<td>{item.averageCost}</td>
+									<td>
+										{item.return}
+										{item.return.includes("-") ? (
+											<i className="fas fa-caret-down text-red-500 pl-1"></i>
+										) : (
+											<i className="fas fa-caret-up text-green-500 pl-1"></i>
+										)}
+									</td>
+									<td>{item.equity}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+
+				{/* Donut Chart Container */}
+				<div className="w-1/2 chart-container text-center flex flex-col justify-center items-center">
+					<div className="bg-white rounded-lg shadow p-4">
+						<canvas
+							id="myDoughnutChart"
+							width="300"
+							height="300"></canvas>
+						<div className="center-text">
+							<div className="text-xl font-semibold">
+								{highlightedIndex !== null
+									? tableData[highlightedIndex].symbol
+									: "Stocks and Options"}
+							</div>
+							<div className="text-xl ">
+								Equity: $
+								{highlightedIndex !== null
+									? tableData[highlightedIndex].equity
+									: tableData.reduce((acc, item) => {
+											const equityValue = parseInt(
+												item.equity.replace("$", "").replace(",", "")
+											);
+											return acc + equityValue;
+									  }, 0)}
+							</div>
 						</div>
 					</div>
 				</div>
