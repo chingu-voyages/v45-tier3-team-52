@@ -3,6 +3,20 @@ import Chart from "chart.js/auto";
 import "font-awesome/css/font-awesome.min.css";
 
 const SortableTable = () => {
+	// sample data for top table
+	const [topTableData, setTopTableData] = useState([
+		{
+			name: "Stocks and Options",
+			percentage: 25,
+			amount: "$2,500",
+		},
+		{
+			name: "Brokerage Cash",
+			percentage: 65,
+			amount: "$6,500",
+		},
+	]);
+
 	// Sample data for the table
 	const [tableData, setTableData] = useState([
 		{
@@ -35,7 +49,9 @@ const SortableTable = () => {
 	]);
 
 	const chartRef = useRef(null);
+	const chartRefTop = useRef(null);
 
+	const [highlightedIndexTop, setHighlightedIndexTop] = useState(null);
 	const [highlightedIndex, setHighlightedIndex] = useState(null);
 
 	useEffect(() => {
@@ -45,6 +61,8 @@ const SortableTable = () => {
 			"var(--other-color)",
 			"var(--other-color)",
 		];
+
+		const initialColorsTop = topTableData.map(() => "rgb(0, 200, 5)");
 
 		// Define the chart configuration outside the effect
 		const config = {
@@ -84,10 +102,60 @@ const SortableTable = () => {
 			},
 		};
 
+		const configTop = {
+			type: "doughnut",
+			data: {
+				labels: ["Stock Symbol", "Equity"],
+				datasets: [
+					{
+						data: topTableData.map(item => item.percentage),
+						backgroundColor: initialColorsTop,
+						borderColor: topTableData.map(() => "white"),
+						borderWidth: 3,
+					},
+				],
+			},
+			options: {
+				responsive: false,
+				maintainAspectRatio: false,
+				plugins: {
+					legend: false,
+					tooltip: {
+						enabled: false,
+					},
+				},
+				cutout: "80%",
+				onHover: (event, elements) => {
+					if (elements.length > 0) {
+						const hoveredElement = elements[0];
+						const index = hoveredElement.index;
+						setHighlightedIndexTop(index);
+						updateDonutColorsTop(index);
+					} else {
+						setHighlightedIndexTop(null);
+						updateDonutColorsTop(null);
+					}
+				},
+			},
+		};
+
 		const chartContainerStyles = {
 			"--highlight-color": "rgb(0, 200, 5)",
 			"--other-color": "rgb(220, 255, 220)", // Whitish color
 		};
+
+		const chartContainerStylesTop = {
+			"--highlight-color": "rgb(0, 200, 5)",
+			"--other-color": "rgb(220, 255, 220)",
+		};
+
+		const chartContainerTop = document.querySelector(".chart-container-top");
+		Object.assign(chartContainerTop.style, chartContainerStylesTop);
+		const ctxTop = document
+			.getElementById("myDoughnutChartTop")
+			.getContext("2d");
+		const myChartTop = new Chart(ctxTop, configTop);
+		chartRefTop.current = myChartTop;
 
 		const chartContainer = document.querySelector(".chart-container");
 		Object.assign(chartContainer.style, chartContainerStyles);
@@ -118,6 +186,9 @@ const SortableTable = () => {
 		return () => {
 			if (chartRef.current) {
 				chartRef.current.destroy();
+			}
+			if (chartRefTop.current) {
+				chartRefTop.current.destroy();
 			}
 		};
 	}, []);
@@ -158,6 +229,20 @@ const SortableTable = () => {
 		}
 	};
 
+	const updateDonutColorsTop = index => {
+		if (chartRefTop.current) {
+			const updatedColors = topTableData.map((_, i) => {
+				return index === null
+					? "rgb(0, 200, 5)"
+					: i === index
+					? "rgb(0, 200, 5)"
+					: "rgb(220, 255, 220)";
+			});
+			chartRefTop.current.data.datasets[0].backgroundColor = updatedColors;
+			chartRefTop.current.update();
+		}
+	};
+
 	return (
 		<div>
 			<div className="container mx-auto items-center">
@@ -192,6 +277,32 @@ const SortableTable = () => {
 							</tr>
 						</tbody>
 					</table>
+				</div>
+				<div className="w-1/2 chart-container-top text-center flex flex-col justify-center items-center">
+					<div className="bg-white rounded-lg shadow p-4">
+						<canvas
+							id="myDoughnutChartTop"
+							width="300"
+							height="300"></canvas>
+						<div className="center-text">
+							<div className="text-xl font-semibold">
+								{highlightedIndexTop !== null
+									? topTableData[highlightedIndexTop].symbol
+									: "Total Portfolio Value"}
+							</div>
+							<div className="text-xl">
+								Equity: $
+								{highlightedIndexTop !== null
+									? topTableData[highlightedIndexTop].amount
+									: topTableData.reduce((acc, item) => {
+											const equityValue = parseInt(
+												item.amount.replace("$", "").replace(",", "")
+											);
+											return acc + equityValue;
+									  }, 0)}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 			<div className="container mx-auto flex items-center">
