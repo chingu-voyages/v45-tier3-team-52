@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "../components/Slices/authSlice";
-import stockReducer from "../components/Slices/stockSlice";
-import userReducer from "../components/Slices/userSlice";
-import transactionReducer from "../components/slices/transactionSlice";
-import portfolioReducer from "../components/Slices/portfolioSlice";
+import authReducer from "../Slices/authSlice";
+import stockReducer from "../Slices/stockSlice";
+import userReducer from "../Slices/userSlice";
+import transactionReducer from "../Slices/transactionSlice";
+import portfolioReducer from "../Slices/portfolioSlice";
 
 export const store = configureStore({
 	reducer: {

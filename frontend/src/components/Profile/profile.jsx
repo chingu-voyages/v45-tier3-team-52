@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateUser } from "../Slices/userSlice";
+import { updateUser } from "../../Slices/userSlice";
 import { current } from "@reduxjs/toolkit";
 
 const textInputStyle = "text-s font-bold";
