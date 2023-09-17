@@ -53,7 +53,8 @@ class User(db.Model, UserMixin):
             'id': self.id,
             'email': self.email,
             'wallet': self.wallet,
-            'first_name': self.first_name,
-            'last_name':  self.last_name,
+            'firstName': self.first_name,
+            'lastName':  self.last_name,
             'portfolio': portfolio_dict,
+            'joinDate': self.created_at
         }

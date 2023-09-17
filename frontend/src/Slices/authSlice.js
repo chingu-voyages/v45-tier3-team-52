@@ -27,14 +27,15 @@ export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
 export const registerUser = createAsyncThunk("auth/registerUser", async () => {
 	const request = await axios.post(`${authBaseURL}/register`);
 	const response = await request.data;
+	console.log(response);
 	return response;
 });
 
 // * Authenticate/ restore logged In user
 export const authenticateUser = createAsyncThunk(
 	"auth/authentication",
-	async () => {
-		const request = await axios.get(`${authBaseURL}/`);
+	async userId => {
+		const request = await axios.get(`${authBaseURL}/${userId}`);
 		const response = await request.data;
 		return response;
 	}
@@ -69,9 +70,18 @@ export const authSlice = createSlice({
 				},
 				(state, action) => {
 					state.loading = false;
-					state.userInfo =
-						action.type === logoutUser.fulfilled.type ? {} : action.payload;
+					state.userInfo = action.payload;
 					state.error = "";
+					localStorage.setItem("userId", action.payload.id);
+				}
+			)
+			.addMatcher(
+				action => action.type === logoutUser.fulfilled.type,
+				state => {
+					state.loading = false;
+					state.userInfo = {};
+					state.error = "";
+					localStorage.removeItem("userId");
 				}
 			)
 			.addMatcher(

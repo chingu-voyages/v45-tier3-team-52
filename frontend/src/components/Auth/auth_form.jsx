@@ -13,12 +13,12 @@ const authDesktopStyle = "lg:flex";
 const AuthForm = props => {
 	const { formType } = props;
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 
-	const dispatch = useDispatch();
 	const handleLogin = async () => {
 		const userCredentials = {
 			email,

@@ -5,21 +5,25 @@ import StockChartContainer from "./components/Stock/stockChart_container";
 import ProfileContainer from "./components/Profile/profile_container";
 import Portfolio from "./components/Portfolio/portfolio";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { authenticateUser } from "./Slices/authSlice";
 
 function App() {
 	const dispatch = useDispatch();
+	const currentUser = useSelector(state => state.session.userInfo);
 
 	// checks for an active user session (logged in user)
 	useEffect(() => {
-		const fetchUser = async () => {
-			await dispatch(authenticateUser());
-		};
-		fetchUser();
+		const userId = localStorage.getItem("userId");
+		if (userId) {
+			const fetchUser = async () => {
+				await dispatch(authenticateUser(userId));
+			};
+			fetchUser();
+		}
 	}, [dispatch]);
-
+	console.log(currentUser);
 	return (
 		<div className="h-screen">
 			<Routes>
