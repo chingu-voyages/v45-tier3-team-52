@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import Chart from "chart.js/auto";
 import "font-awesome/css/font-awesome.min.css";
+import { useSelector } from "react-redux";
 
 const SortableTable = () => {
 	// sample data for top table
@@ -243,11 +244,16 @@ const SortableTable = () => {
 		}
 	};
 
+	const userDetails = useSelector(state => state.session.userInfo);
+	const portfolio = useSelector(state => state.session.userInfo.portfolio);
+	const portfolioTotal = userDetails.wallet + portfolio.marketValue;
+	const stockArr = Object.values(portfolio.assets);
+
 	return (
 		<div>
 			<div className="container mx-auto items-center">
 				<p className="">Total Portfolio Value</p>
-				<p className="text-3xl font-medium ">$PortfolioValue</p>
+				<p className="text-3xl font-medium ">{portfolioTotal}</p>
 			</div>
 			<div className="container mx-auto flex items-center">
 				<div className="w-1/2 table-container py-8">
@@ -260,7 +266,7 @@ const SortableTable = () => {
 								<td className="w-1/2">
 									<div className="flex justify-end">
 										<div className="text-gray-500 mr-4">25%</div>
-										<div>$2,500</div>
+										<div>${portfolio.marketValue}</div>
 									</div>
 								</td>
 							</tr>
@@ -271,7 +277,7 @@ const SortableTable = () => {
 								<td className="w-1/2">
 									<div className="flex justify-end">
 										<div className="text-gray-500 mr-4">65%</div>
-										<div>$6,500</div>
+										<div>${userDetails.wallet}</div>
 									</div>
 								</td>
 							</tr>

@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 // import robinhood from "../../assets/robinhoodBG.jpeg";
 import { loginUser } from "../../Slices/authSlice";
@@ -25,8 +25,14 @@ const AuthForm = props => {
 			password,
 		};
 		await dispatch(loginUser(userCredentials));
-		navigate("/portfolio");
 	};
+
+	const currentUser = useSelector(state => state.session.userInfo);
+	useEffect(() => {
+		if (currentUser.id) {
+			navigate("/portfolio");
+		}
+	});
 
 	const registerName = (
 		<div className="flex flex-col gap-5 md:flex-row lg:flex-col">

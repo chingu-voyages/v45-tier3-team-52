@@ -12,6 +12,7 @@ const buttonColors = ["orange", "pink", "purple", "blue", "green"];
 
 const Profile = () => {
 	const currentUser = useSelector(state => state.session.userInfo);
+	const assets = useSelector(state => state.session.userInfo?.portfolio.assets);
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 
@@ -34,7 +35,7 @@ const Profile = () => {
 	// 	setEmail(currentUser?.email);
 	// }, [currentUser]);
 
-	console.log(currentUser);
+	console.log(assets);
 
 	const handleUserUpdate = () => {
 		const userData = {
@@ -218,12 +219,14 @@ const Profile = () => {
 								</div>
 							</div>
 							<div>
-								<div className="text-gray-500">Brokerage holdings</div>
-								<div className="text-right">${holdings}</div>
+								<div className="text-gray-500">
+									<h2>Brokerage holdings</h2>
+									{}
+								</div>
 							</div>
 							<div>
 								<div className="text-gray-500">Brokerage cash</div>
-								<div className="text-right">${currentUser.wallet}</div>
+								<div className="text-right">${cash}</div>
 							</div>
 						</div>
 					</div>
@@ -236,7 +239,7 @@ const Profile = () => {
 							<div>
 								<div className="font-medium text-xl">Account value</div>
 								<div className="font-bold text-xl text-right">
-									${accountValue}
+									${currentUser.wallet}
 								</div>
 							</div>
 						</div>

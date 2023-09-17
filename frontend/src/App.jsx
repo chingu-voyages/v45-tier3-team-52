@@ -5,7 +5,7 @@ import StockChartContainer from "./components/Stock/stockChart_container";
 import ProfileContainer from "./components/Profile/profile_container";
 import Portfolio from "./components/Portfolio/portfolio";
 import { Routes, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { authenticateUser } from "./Slices/authSlice";
 
@@ -19,7 +19,8 @@ function App() {
 			await dispatch(authenticateUser(Number(userId)));
 		})();
 	}, [dispatch]);
-
+	const currentUser = useSelector(state => state.session.userInfo);
+	console.log(currentUser);
 	return (
 		<div className="h-screen">
 			<Routes>
