@@ -21,3 +21,4 @@ autopep8
 gunicorn
 yfinance
 itsdangerous
+flask_wtf
