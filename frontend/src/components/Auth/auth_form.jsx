@@ -25,6 +25,7 @@ const AuthForm = props => {
 			password,
 		};
 		await dispatch(loginUser(userCredentials));
+		navigate("/portfolio");
 	};
 
 	const registerName = (

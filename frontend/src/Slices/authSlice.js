@@ -27,7 +27,7 @@ export const logoutUser = createAsyncThunk("auth/logoutUser", async () => {
 export const registerUser = createAsyncThunk("auth/registerUser", async () => {
 	const request = await axios.post(`${authBaseURL}/register`);
 	const response = await request.data;
-	console.log(response);
+
 	return response;
 });
 
