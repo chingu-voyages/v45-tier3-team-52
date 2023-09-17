@@ -1,13 +1,8 @@
 """empty message
 
-<<<<<<<< HEAD:backend/migrations/versions/75b0fe17ddcd_.py
-Revision ID: 75b0fe17ddcd
+Revision ID: 258c6a5ce882
 Revises: 
-Create Date: 2023-09-07 17:49:23.729104
-========
-Revision ID: bf2ae679924f
-Revises: 
-Create Date: 2023-09-09 15:17:26.132312
+Create Date: 2023-09-16 16:24:20.642229
 
 """
 from alembic import op
@@ -15,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'bf2ae679924f'
+revision = '258c6a5ce882'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -41,7 +36,7 @@ def upgrade():
     sa.Column('wallet', sa.Float(precision=100), nullable=True),
     sa.Column('hashed_password', sa.String(length=255), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email')
     )
@@ -64,7 +59,7 @@ def upgrade():
     sa.Column('market_value', sa.Float(), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -82,7 +77,7 @@ def upgrade():
     sa.Column('total', sa.Float(), nullable=True),
     sa.Column('portfolio_id', sa.Integer(), nullable=False),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
-    sa.Column('updated_at', sa.DateTime(), nullable=False),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['portfolio_id'], ['user_portfolios.id'], ),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], ),
     sa.PrimaryKeyConstraint('id')
