@@ -245,10 +245,11 @@ const SortableTable = () => {
 	};
 
 	const userDetails = useSelector(state => state.session.userInfo);
-	const portfolio = useSelector(state => state.session.userInfo.portfolio);
-	const portfolioTotal = userDetails.wallet + portfolio.marketValue;
-	const stockArr = Object.values(portfolio.assets);
-
+	const portfolio = useSelector(state => state.session.userInfo?.portfolio);
+	const portfolioTotal = userDetails?.wallet + portfolio?.marketValue;
+	if (portfolio) {
+		const stockArr = Object.values(portfolio?.assets);
+	}
 	return (
 		<div>
 			<div className="container mx-auto items-center">
@@ -266,7 +267,7 @@ const SortableTable = () => {
 								<td className="w-1/2">
 									<div className="flex justify-end">
 										<div className="text-gray-500 mr-4">25%</div>
-										<div>${portfolio.marketValue}</div>
+										<div>${portfolio?.marketValue}</div>
 									</div>
 								</td>
 							</tr>
@@ -277,7 +278,7 @@ const SortableTable = () => {
 								<td className="w-1/2">
 									<div className="flex justify-end">
 										<div className="text-gray-500 mr-4">65%</div>
-										<div>${userDetails.wallet}</div>
+										<div>${userDetails?.wallet}</div>
 									</div>
 								</td>
 							</tr>
