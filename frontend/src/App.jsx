@@ -9,7 +9,7 @@ import BuySellForm from "./components/BuySellForm/buysellform";
 // import StockComponent from "./components/testing/StockComponent";
 // import TransactionComponent from "./components/testing/TransactionComponent";
 // import CreateTransactionForm from "./components/testing/CreateTransactionForm";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { authenticateUser } from "./Slices/authSlice";
 
@@ -18,12 +18,13 @@ function App() {
 
 	// checks for an active user session (logged in user)
 	useEffect(() => {
-		const fetchUser = async () => {
-			await dispatch(authenticateUser());
-		};
-		fetchUser();
+		const userId = localStorage.getItem("userId");
+		(async () => {
+			await dispatch(authenticateUser(Number(userId)));
+		})();
 	}, [dispatch]);
-
+	const currentUser = useSelector(state => state.session.userInfo);
+	console.log(currentUser);
 	return (
 		<div className="h-screen">
 			<Routes>

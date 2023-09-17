@@ -19,14 +19,16 @@ def validation_errors_to_error_messages(validation_errors):
 ############ * Authentication #######################################
 
 
-@auth_routes.route('/')
-def authentication():
+@auth_routes.route('/<int:id>')
+def authentication(id):
     """
     Authenticates a user.
     """
-    if current_user.is_authenticated:
-        return current_user.to_dict()
-    return {'errors': ['Unauthorized']}
+    if id != None:
+        logged_user = User.query.filter(User.id == id).first()
+        return logged_user.to_dict()
+    else:
+        return {'errors': ['Unauthorized']}
 
 
 ############ * Login #######################################

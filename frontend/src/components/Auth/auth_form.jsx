@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 // import robinhood from "../../assets/robinhoodBG.jpeg";
 import { loginUser } from "../../Slices/authSlice";
@@ -13,12 +13,12 @@ const authDesktopStyle = "lg:flex";
 const AuthForm = props => {
 	const { formType } = props;
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 
-	const dispatch = useDispatch();
 	const handleLogin = async () => {
 		const userCredentials = {
 			email,
@@ -26,6 +26,13 @@ const AuthForm = props => {
 		};
 		await dispatch(loginUser(userCredentials));
 	};
+
+	const currentUser = useSelector(state => state.session.userInfo);
+	useEffect(() => {
+		if (currentUser.id) {
+			navigate("/portfolio");
+		}
+	});
 
 	const registerName = (
 		<div className="flex flex-col gap-5 md:flex-row lg:flex-col">
